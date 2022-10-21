@@ -51,6 +51,7 @@ C:\Trabajo\Proyectos H\opticaevent\Eventos\bin\roslyn\vbc.rsp
 C:\Trabajo\Proyectos H\opticaevent\Eventos\bin\roslyn\VBCSCompiler.exe
 C:\Trabajo\Proyectos H\opticaevent\Eventos\bin\roslyn\VBCSCompiler.exe.config
 C:\Trabajo\Proyectos H\opticaevent\Eventos\bin\BouncyCastle.Crypto.dll
+C:\Trabajo\Proyectos H\opticaevent\Eventos\bin\CarlosAg.ExcelXmlWriter.dll
 C:\Trabajo\Proyectos H\opticaevent\Eventos\bin\DocumentFormat.OpenXml.dll
 C:\Trabajo\Proyectos H\opticaevent\Eventos\bin\ExcelDataReader.DataSet.dll
 C:\Trabajo\Proyectos H\opticaevent\Eventos\bin\ExcelDataReader.dll
@@ -133,4 +134,3 @@ C:\Trabajo\Proyectos H\opticaevent\Eventos\obj\Debug\optica.csproj.CoreCompileIn
 C:\Trabajo\Proyectos H\opticaevent\Eventos\obj\Debug\optica.csproj.CopyComplete
 C:\Trabajo\Proyectos H\opticaevent\Eventos\obj\Debug\optica.dll
 C:\Trabajo\Proyectos H\opticaevent\Eventos\obj\Debug\optica.pdb
-C:\Trabajo\Proyectos H\opticaevent\Eventos\obj\Debug\optica.csproj.AssemblyReference.cache

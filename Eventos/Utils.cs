@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using CarlosAg.ExcelXmlWriter;
 
 namespace optica
 {
@@ -593,7 +594,8 @@ namespace optica
                     {
                         if (!listcol.Contains(dc.ColumnName))
                         {
-                            ew.Write(dc.ColumnName, colheader, 1, SwiftExcel.DataType.Text);
+                            string titulo = dc.ColumnName.Replace("_"," ");
+                            ew.Write(titulo, colheader, 1, SwiftExcel.DataType.Text);
                             colheader++;
                         }
                     }
@@ -632,6 +634,182 @@ namespace optica
             return resultado;
         }
 
+        public static string Crear_Excel_V2(DataTable Dt_Datos, string _Titulo)
+        {
+            string resultado = "";
+
+
+            string nombre_archivo = "Descarga_" + DateTime.Now.ToString("ddMMyyyyHHmm");
+            nombre_archivo = nombre_archivo.Replace(".", "_").ToUpper();
+            string Ruta_Archivo = HttpContext.Current.Server.MapPath("~") + @"\\Archivos_Para_Descarga\\" + nombre_archivo + ".xls";
+
+            CarlosAg.ExcelXmlWriter.Workbook Libro = new CarlosAg.ExcelXmlWriter.Workbook();
+
+            #region Hoja de Excel
+            try
+            {
+                #region Definición de archivo
+                Libro.Properties.Title = "Reporte Excel";
+                Libro.Properties.Created = DateTime.Now;
+                Libro.Properties.Author = "Reporte";
+                #endregion Definición de archivo
+
+                #region Se crea la hoja del reporte
+                //Creamos una hoja que tendrá el libro.
+                CarlosAg.ExcelXmlWriter.Worksheet Hoja = Libro.Worksheets.Add("Reporte SSA");
+                //Agregamos un renglón a la hoja de excel.
+                CarlosAg.ExcelXmlWriter.WorksheetRow Renglon = Hoja.Table.Rows.Add();
+                //Creamos el estilo cabecera para la hoja de excel. 
+                CarlosAg.ExcelXmlWriter.WorksheetStyle Estilo_Cabecera = Libro.Styles.Add("HeaderStyle");
+                //Creamos el estilo contenido para la hoja de excel. 
+                CarlosAg.ExcelXmlWriter.WorksheetStyle Estilo_Contenido = Libro.Styles.Add("BodyStyle");
+                CarlosAg.ExcelXmlWriter.WorksheetStyle Estilo_Contenido_D = Libro.Styles.Add("dateStyle");
+                #endregion Se crea la hoja del reporte
+
+                #region Definen los estilos de los encabezados
+                Estilo_Cabecera.Font.FontName = "Tahoma";
+                Estilo_Cabecera.Font.Size = 10;
+                Estilo_Cabecera.Font.Bold = true;
+                Estilo_Cabecera.Alignment.Horizontal = StyleHorizontalAlignment.Center;
+                Estilo_Cabecera.Font.Color = "#FFFFFF";
+                Estilo_Cabecera.Interior.Color = "#193d61";
+                Estilo_Cabecera.Interior.Pattern = StyleInteriorPattern.Solid;
+                Estilo_Cabecera.Borders.Add(StylePosition.Top, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Cabecera.Borders.Add(StylePosition.Bottom, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Cabecera.Borders.Add(StylePosition.Left, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Cabecera.Borders.Add(StylePosition.Right, LineStyleOption.Continuous, 1, "Black");
+                #endregion Definen los estilos de los encabezados
+
+                #region Definen los estilos de las celdas de contenido
+                Estilo_Contenido.Font.FontName = "Tahoma";
+                Estilo_Contenido.Font.Size = 9;
+                Estilo_Contenido.Font.Bold = false;
+                Estilo_Contenido.Alignment.Horizontal = StyleHorizontalAlignment.Left;
+                Estilo_Contenido.Font.Color = "#000000";
+                Estilo_Contenido.Interior.Color = "#FFFFFF";
+                Estilo_Contenido.Interior.Pattern = StyleInteriorPattern.Solid;
+                Estilo_Contenido.Borders.Add(StylePosition.Top, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Contenido.Borders.Add(StylePosition.Bottom, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Contenido.Borders.Add(StylePosition.Left, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Contenido.Borders.Add(StylePosition.Right, LineStyleOption.Continuous, 1, "Black");
+
+
+
+                Estilo_Contenido_D.Font.FontName = "Tahoma";
+                Estilo_Contenido_D.Font.Size = 9;
+                Estilo_Contenido_D.Font.Bold = false;
+                Estilo_Contenido_D.Alignment.Horizontal = StyleHorizontalAlignment.Left;
+                Estilo_Contenido_D.Font.Color = "#000000";
+                Estilo_Contenido_D.Interior.Color = "#FFFFFF";
+                Estilo_Contenido_D.Interior.Pattern = StyleInteriorPattern.Solid;
+                Estilo_Contenido_D.Borders.Add(StylePosition.Top, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Contenido_D.Borders.Add(StylePosition.Bottom, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Contenido_D.Borders.Add(StylePosition.Left, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Contenido_D.Borders.Add(StylePosition.Right, LineStyleOption.Continuous, 1, "Black");
+                Estilo_Contenido_D.NumberFormat = "dd/mm/yyyy";
+
+
+
+                #endregion Definen los estilos de las celdas de contenido
+
+                #region se crean el renglon de los nombres de las columnas
+                foreach (DataColumn Dc_Encabezado in Dt_Datos.Columns)
+                {
+                    Hoja.Table.Columns.Add(new CarlosAg.ExcelXmlWriter.WorksheetColumn(120)); //se le deja ese tamaño standar
+                }
+                #endregion se crean el renglon de los nombres de las columnas
+
+                #region Se pintan los nombres de las columnas
+                foreach (DataColumn Columna in Dt_Datos.Columns)
+                {
+                    if (Columna is DataColumn)
+                    {
+                        Renglon.Cells.Add(new CarlosAg.ExcelXmlWriter.WorksheetCell(Columna.ColumnName.Replace("_", " "), "HeaderStyle"));
+                    }
+                }
+                #endregion Se pintan los nombres de las columnas
+
+                if (Valida_Fuente_Datos(Dt_Datos))
+                {
+                    #region se van pintando los renglones con el contenido
+                    foreach (DataRow Dr in Dt_Datos.Rows)
+                    {
+                        Renglon = Hoja.Table.Rows.Add();
+
+                        foreach (DataColumn Columna in Dt_Datos.Columns)
+                        {
+                            if (Columna is DataColumn)
+                            {
+                                if (Columna.ColumnName.Equals("Hora_Nacimiento"))
+                                {
+                                    Renglon.Cells.Add(new CarlosAg.ExcelXmlWriter.WorksheetCell(String.Format("{0:HH:mm:ss}", Dr[Columna.ColumnName]), CarlosAg.ExcelXmlWriter.DataType.String, "BodyStyle"));
+                                }
+                                else
+                                {
+                                    if (
+                                        Columna.ColumnName.ToLower().Contains("str_f")
+                                        || Columna.ColumnName.ToLower().Contains("fecha_")
+                                        || Columna.ColumnName.ToLower().Contains("fecinisi")
+                                        || Columna.ColumnName.ToLower().Contains("fecdef")
+                                        || Columna.ColumnName.ToLower().Contains("fecingre")
+                                        || Columna.ColumnName.ToLower().Contains("fechreg")
+
+                                        )
+                                    {
+                                        Renglon.Cells.Add(new CarlosAg.ExcelXmlWriter.WorksheetCell(Dr[Columna.ColumnName].ToString(), CarlosAg.ExcelXmlWriter.DataType.String, "dateStyle"));
+
+                                    }
+                                    else
+                                    {
+                                        Renglon.Cells.Add(new CarlosAg.ExcelXmlWriter.WorksheetCell(Dr[Columna.ColumnName].ToString(), CarlosAg.ExcelXmlWriter.DataType.String, "BodyStyle"));
+                                    }
+
+
+                                    //Renglon.Cells.Add(new CarlosAg.ExcelXmlWriter.WorksheetCell(Dr[Columna.ColumnName].ToString(), DataType.String, "BodyStyle"));
+
+                                }
+                            }
+                        }
+
+
+                    }
+
+
+                }
+                else
+                {
+                    Renglon = Hoja.Table.Rows.Add();
+                    Renglon.Cells.Add(new CarlosAg.ExcelXmlWriter.WorksheetCell("SIN REGISTROS", CarlosAg.ExcelXmlWriter.DataType.String, "BodyStyle"));
+                }
+                #endregion se van pintando los renglones con el contenido
+
+            }
+
+            catch (Exception ex)
+            {
+                problems(ex);
+            }
+            #endregion Hoja de Excel
+
+
+
+
+            resultado = nombre_archivo + ".xls";
+            try
+            {
+                Libro.Save(Ruta_Archivo);
+                // Process.Start(Ruta_Archivo);
+            }
+            catch (Exception ex)
+            {
+                //no es necesario que se guarde esta excepción, no causa problema pues si abre el archivo sin problema.
+                //problems(ex);
+            }
+
+
+            //Utilerias.Log_Descargas(_Titulo, resultado);
+            return resultado;
+        }
         public static DataTable Agrupar_Fuente(string _ID, string _Nombre, DataTable dt_Fuente)
         {
             DataTable dt_Resultado = new DataTable();

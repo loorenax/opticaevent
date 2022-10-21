@@ -58,52 +58,6 @@ namespace optica.Data
             return ds;
         }
 
-        public DataSet ValidarAcceso(Dictionary<string, object> _DyParametros)
-        {
-            DataSet ds = new DataSet();
-            DataTable dt = Utils.SchemaDtResult_V2();
-            
-            string url = _DyParametros["P_Url"].ToString();
-            url = url.Replace("/pagina/", "");
-
-            dt.Rows[0]["estatusProcedimiento"] = Utils._ERROR_;
-            dt.Rows[0]["mensajeProcedimiento"] = "El rol del usuario no tiene acceso a esta opción.";
-
-            if (Sezzion.idRol == "3") {
-                // Familia
-                foreach (object drobj in ListParentsMenu) {
-
-                    Dictionary<string, object> obj = (Dictionary<string, object>)drobj;
-
-                    if (obj["Url"].ToString() == url) {
-                        dt.Rows[0]["estatusProcedimiento"] = Utils._OK_;
-                        dt.Rows[0]["mensajeProcedimiento"] = "Es valido.";
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                foreach (object drobj in ListAdminMenu)
-                {
-
-                    Dictionary<string, object> obj = (Dictionary<string, object>)drobj;
-
-                    if (obj["Url"].ToString() == url)
-                    {
-                        dt.Rows[0]["estatusProcedimiento"] = Utils._OK_;
-                        dt.Rows[0]["mensajeProcedimiento"] = "Es valido.";
-                        break;
-                    }
-                }
-
-            }
-
-
-            dt.TableName = "ValidacionAcceso";
-            ds.Tables.Add(dt.Copy());
-            return ds;
-        }
         public bool ValidarAcceso(string _Url)
         {
 
@@ -117,49 +71,20 @@ namespace optica.Data
                 string url = _Url;
                 url = url.Replace("/paginas/", "");
 
-                dt.Rows[0]["estatusProcedimiento"] = Utils._ERROR_;
-                dt.Rows[0]["mensajeProcedimiento"] = "El rol del usuario no tiene acceso a esta opción.";
+                dt.Rows[0]["Estatus_Procedimiento"] = Utils._ERROR_;
+                dt.Rows[0]["Mensaje_Procedimiento"] = "El rol del usuario no tiene acceso a esta opción.";
 
                 if (url != "Inicio.aspx")
                 {
-
-
-                    //if (Sezzion.idRol == "3")
-                    //{
-                    //    // Familia
-                    //    foreach (Menu mn in ListParentsMenu)
-                    //    {
-                    //        if (mn.Url == url)
-                    //        {
-                    //            esValido = true;
-                    //            dt.Rows[0]["estatusProcedimiento"] = Utils._OK_;
-                    //            dt.Rows[0]["mensajeProcedimiento"] = "Es valido.";
-                    //            break;
-                    //        }
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    foreach (Menu mn in ListAdminMenu)
-                    //    {
-                    //        if (mn.Url == url)
-                    //        {
-                    //            esValido = true;
-                    //            dt.Rows[0]["estatusProcedimiento"] = Utils._OK_;
-                    //            dt.Rows[0]["mensajeProcedimiento"] = "Es valido.";
-                    //            break;
-                    //        }
-                    //    }
-
-                    //}
-
-                    if (Utils.Valida_Fuente_Datos(Sezzion.dtAccesos)) {
+                    if (Utils.Valida_Fuente_Datos(Sezzion.dtAccesos))
+                    {
                         var busca = Sezzion.dtAccesos.AsEnumerable().Where(x => x.Field<string>("Url") == url);
-                        if (busca.Any()) {
+                        if (busca.Any())
+                        {
                             esValido = true;
                         }
                     }
-                    
+
 
                 }
                 else

@@ -22,8 +22,11 @@
                         <select class="form-control" id="Cmb_idColegio" onchange="Cmb_idColegio_Change();" ></select>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3 col-lg-2">
-                    <button id="BtnExportar" type="button" class="btn btn-primary" onclick="BtnExportarClick();">Exportar</button>
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <button id="BtnExportar" type="button" class="btn btn-primary" onclick="BtnExportarClick();">Exportar Colegio Seleccionado</button>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-4 text-right">
+                    <button id="BtnExportarTodo" type="button" class="btn btn-primary" onclick="BtnExportarClickTodo();">Exportar Total de Registros</button>
                 </div>
 
             </div>

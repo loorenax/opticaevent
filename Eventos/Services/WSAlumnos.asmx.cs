@@ -98,7 +98,12 @@ namespace optica.Services
                 Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
                 DataSet ds = dat.GetList(obj_parametros);
 
-                string nombreReporte =  Utils.Crear_Excel(ds.Tables["Alumnos"], "Alumnos");
+                ds.Tables["Alumnos"].Columns.Remove("idRegistro");
+                ds.Tables["Alumnos"].Columns.Remove("idColegio");
+                ds.Tables["Alumnos"].Columns.Remove("fechaNacPadre");
+                ds.Tables["Alumnos"].Columns["str_fechaNacPadre"].ColumnName = "FechaNacPadre";
+
+                string nombreReporte =  Utils.Crear_Excel_V2(ds.Tables["Alumnos"], "Alumnos");
 
                 ms.Str_Respuesta_1 = nombreReporte;
                 ms.Estatus = Utils._OK_;
@@ -147,6 +152,37 @@ namespace optica.Services
 
             return Json_Resultado;
         }
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string SetLentesEntregados(string Parametros)
+        {
+            string Json_Resultado = string.Empty;
+            MensajeServidor ms = new MensajeServidor();
+
+            try
+            {
+                JavaScriptSerializer deserializar_json = new JavaScriptSerializer();
+                Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
+                DataSet ds = dat.SetLentesEntregados(obj_parametros);
+
+                ms.Str_Respuesta_1 = JsonConvert.SerializeObject(ds);
+                ms.Estatus = Utils._OK_;
+            }
+            catch (Exception Ex)
+            {
+                ms.Estatus = Utils._ERROR_;
+                ms.Mensaje = Ex.Message;
+                Utils.problems(Ex);
+            }
+            finally
+            {
+                Json_Resultado = JsonMapper.ToJson(ms);
+            }
+
+            return Json_Resultado;
+        }
+
 
     }
 }

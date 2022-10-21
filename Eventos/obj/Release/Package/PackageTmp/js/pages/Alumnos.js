@@ -146,9 +146,11 @@ function BtnExportarClick() {
         var obj_filtros = Object();
         obj_filtros.P_idColegio = PAGECONTROLS.controls.Cmb_idColegio.value;
 
-
         var ruta = '../Services/WSAlumnos.asmx/ExportList';
         var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });
+
+        var btn = document.getElementById('BtnExportar');
+        var icono_inicial = fg_Cambiar_Icono_DOM(btn, _SPINNER_);
 
         $.ajax({
             type: 'POST',
@@ -159,6 +161,8 @@ function BtnExportarClick() {
             async: true,
             cache: false,
             success: function (datos) {
+
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
 
                 var mensaje_servidor = JSON.parse(datos.d);
 
@@ -183,6 +187,66 @@ function BtnExportarClick() {
 
             }
             , error: function (error) {
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                fg_mensaje_problema_tecnico(error);
+            }
+        });
+
+    }
+    catch (e) {
+        fg_mensaje_problema_tecnico(e);
+    }
+}
+function BtnExportarClickTodo() {
+
+
+    try {
+
+
+        var obj_filtros = Object();
+        //obj_filtros.P_idColegio = PAGECONTROLS.controls.Cmb_idColegio.value;
+        var ruta = '../Services/WSAlumnos.asmx/ExportList';
+        var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });
+
+        var btn = document.getElementById('BtnExportarTodo');
+        var icono_inicial = fg_Cambiar_Icono_DOM(btn, _SPINNER_);
+
+        $.ajax({
+            type: 'POST',
+            url: ruta,
+            data: $data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            cache: false,
+            success: function (datos) {
+
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
+
+                var mensaje_servidor = JSON.parse(datos.d);
+
+                if (mensaje_servidor.Estatus == _OK_) {
+
+                    fechaActual = mensaje_servidor.Str_Fecha_Actual;
+
+                    var ancla = document.getElementById('Btn_Descargar_Reporte_Excel_Generado');
+                    ancla.href = '..\\Archivos_Para_Descarga\\' + mensaje_servidor.Str_Respuesta_1;
+                    ancla.click();
+
+
+
+                    //var ds = JSON.parse(mensaje_servidor.Str_Respuesta_1);
+
+                    //loadGrid(ds.Alumnos);
+
+                }
+                else {
+                    fg_mensaje_problema_tecnico(mensaje_servidor);
+                }
+
+            }
+            , error: function (error) {
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
                 fg_mensaje_problema_tecnico(error);
             }
         });
@@ -217,6 +281,16 @@ function loadGrid(_Dt) {
                 var tag = `
                            <input type="text" class="form-control" id="Txt_od_${row.idRegistro}" value="${row.od}" onchange="setOjos(${row.idRegistro});" maxlength="3" placeholder="OD" autocomplete="off" style="text-align:center;"/>
                           `;
+
+                return tag;
+            }
+        });
+
+        columnas.push({
+            field: 'lentesEntregados', title: 'Lente Entregado', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+            , formatter: function (value, row, key) {
+
+                var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`lentesEntregados_${row.idRegistro}`, row.Lente_Entregado, `onclick="setLentesEntregados(${row.idRegistro})"`);
 
                 return tag;
             }
@@ -422,7 +496,66 @@ function setInactivarReactivar() {
         fg_mensaje_problema_tecnico(e);
     }
 }
+function setLentesEntregados(_idRegistro) {
 
+
+    try {
+
+        var obj_filtros = Object();
+        obj_filtros.idRegistro = _idRegistro
+
+        var ruta = '../Services/WSAlumnos.asmx/SetLentesEntregados';
+        var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });
+
+        var btn = document.getElementById(`BtnChk_lentesEntregados_${_idRegistro}`);
+        var icono_inicial = fg_Cambiar_Icono_DOM(btn, _SPINNER_);
+
+        $.ajax({
+            type: 'POST',
+            url: ruta,
+            data: $data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            cache: false,
+            success: function (datos) {
+
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                var mensaje_servidor = JSON.parse(datos.d);
+
+                if (mensaje_servidor.Estatus == _OK_) {
+
+                    fechaActual = mensaje_servidor.Str_Fecha_Actual;
+
+                    var ds = JSON.parse(mensaje_servidor.Str_Respuesta_1);
+
+                    if (fg_resultOK(ds.Result)) {
+
+                        fg_ChekedUnchecked(btn, ds.Result[0].lentesEntregados);
+                    }
+                    else {
+                        fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    }
+                }
+                else {
+
+                    fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    fg_mensaje_problema_tecnico(mensaje_servidor);
+                }
+
+            }
+            , error: function (error) {
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                fg_mensaje_problema_tecnico(error);
+            }
+
+        });
+
+    }
+    catch (e) {
+        fg_mensaje_problema_tecnico(e);
+    }
+}
 
 function Cmb_idColegio_Change() {
 

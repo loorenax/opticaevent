@@ -72,6 +72,19 @@ namespace optica.Data
             return ds;
         }
 
+        public DataSet SetLentesEntregados(Dictionary<string, object> _DyParametros)
+        {
+            DataSet ds = new DataSet();
+            string spname = "optica_setLentesEntregados";
+            Dictionary<string, object> dyparametros = cnxn.SetFormatDyDatos(_DyParametros, spname);
+            SqlParameter[] sqlparameters = cnxn.getSQLParameters(dyparametros);
+
+            ds = SqlHelper.ExecuteDataset(Cnxn.sCon, spname, sqlparameters);
+
+            ds.Tables[0].TableName = "Result";
+
+            return ds;
+        }
 
 
     }

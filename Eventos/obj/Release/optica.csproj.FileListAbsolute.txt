@@ -134,3 +134,4 @@ C:\Trabajo\Proyectos H\opticaevent\Eventos\obj\Release\optica.csproj.CoreCompile
 C:\Trabajo\Proyectos H\opticaevent\Eventos\obj\Release\optica.csproj.CopyComplete
 C:\Trabajo\Proyectos H\opticaevent\Eventos\obj\Release\optica.dll
 C:\Trabajo\Proyectos H\opticaevent\Eventos\obj\Release\optica.pdb
+C:\Trabajo\Proyectos H\opticaevent\Eventos\bin\CarlosAg.ExcelXmlWriter.dll
