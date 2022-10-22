@@ -720,6 +720,7 @@
     <Content Include="paginas\CatUsuarios.aspx" />
     <Content Include="paginas\Home.aspx" />
     <Content Include="paginas\Inicio.aspx" />
+    <Content Include="paginas\LentesEntregados.aspx" />
     <Content Include="paginas\Login.aspx" />
     <Content Include="paginas\Parametros.aspx" />
     <Content Include="paginas\Registro.aspx" />
@@ -783,6 +784,13 @@
     </Compile>
     <Compile Include="paginas\Inicio.aspx.designer.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="paginas\LentesEntregados.aspx.cs">
+      <DependentUpon>LentesEntregados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="paginas\LentesEntregados.aspx.designer.cs">
+      <DependentUpon>LentesEntregados.aspx</DependentUpon>
     </Compile>
     <Compile Include="paginas\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

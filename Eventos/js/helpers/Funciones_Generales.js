@@ -956,18 +956,17 @@ function fg_delete_tr_row(_Btn) {
 
         if (_Btn != null) {
 
-
-            //Primer Nivel.. es saber su celda(td)
-            var td = _Btn.parentElement;
-
-            if (td != null) {
-
-                //Seguno nivel es saber su row(tr)
-                var tr = td.parentElement;
-
-                if (tr != null) {
-                    tr.remove();
+            var buscando_tr = _Btn.parentElement;
+            for (var i = 0; i < 10; i++) {
+                //Primer Nivel.. es saber su celda(td)
+                
+                if (buscando_tr.tagName == 'TR') {
+                    buscando_tr.remove();
+                    return;
                 }
+
+                buscando_tr = buscando_tr.parentElement;
+
             }
         }
     }
@@ -1756,7 +1755,7 @@ function fg_Template_BtnChk_Form_Group(_Campo, _isChecked, _Etiqueta, _Propiedad
                 <div class="form-group">
                     <label style="display:block;">&nbsp;</label>
                     <label for="BtnChk_${_Campo}" class="mb-1 font-weight-bold">${_Etiqueta}</label>
-                    <button id="BtnChk_${_Campo}" type="button" class="btn btnchk"><i class="${tag_class_check}"></i></button>
+                    <button id="BtnChk_${_Campo}" type="button" class="btn btnchk" ${_Propiedad_Adicional}><i class="${tag_class_check}"></i></button>
                 </div>
 
               `;
@@ -2268,6 +2267,24 @@ function fg_rowStyle(row, index) {
     }
 
     return {};
+}
+
+
+function fg_GetPagina() {
+
+    var resultado = '';
+    try {
+        var titulopagina = '';
+        var resultado = location.pathname.split('/paginas/').join('');
+        resultado = resultado.split('.aspx').join('');
+        resultado = resultado.split('/').join('_');
+    }
+    catch (e) {
+        fg_mensaje_problema_tecnico(e);
+    }
+
+
+    return resultado;
 }
 
 /*******************  Especial **********************************/

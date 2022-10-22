@@ -3,6 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="../js/pages/Alumnos.js?<% = Sezzion.codigoSession %>"></script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="contenedorPrincipal" class="container-fluid mk-height-full">
@@ -16,16 +17,16 @@
             </div>
             
             <div class="row">
-                <div class="col-sm-12 col-md-5 col-lg-4">
+                <div class="col-sm-12 col-md-6 col-lg-5">
                     <div class="input-group d-flex align-items-center">
-                        <label for="Cmb_idColegio" class="mr-2">*Colegio</label>
-                        <select class="form-control" id="Cmb_idColegio" onchange="Cmb_idColegio_Change();" ></select>
+                        <label for="Cmb_idColegio_Filtro" class="mr-2">*Colegio</label>
+                        <select class="form-control" id="Cmb_idColegio_Filtro" onchange="Cmb_idColegio_Filtro_Change();" ></select>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-4">
+                <div class="col-sm-12 col-md-3 col-lg-3 d-flex align-items-end">
                     <button id="BtnExportar" type="button" class="btn btn-primary" onclick="BtnExportarClick();">Exportar Colegio Seleccionado</button>
                 </div>
-                <div class="col-sm-12 col-md-3 col-lg-4 text-right">
+                <div class="col-sm-12 col-md-3 col-lg-4 d-flex align-items-end justify-content-end">
                     <button id="BtnExportarTodo" type="button" class="btn btn-primary" onclick="BtnExportarClickTodo();">Exportar Total de Registros</button>
                 </div>
 
@@ -37,9 +38,9 @@
             </div>
         </div>
 
-        <div id="Card_Captura" class="card" style="display: none;">
+        <div id="Card_Captura" class="card" style="display:none;">
             <div class="card-title">
-                <h4 id="tituloDetalle">Nuevo Horario</h4>
+                <h4 id="tituloDetalle">Cargando...</h4>
                 <button id="Btn_Close_Captura" type="button" class="btn bg-transparent float-right"><i class="fa fa-times"></i></button>
             </div>
             <div id="Card_Captura_Body" class="card-body">

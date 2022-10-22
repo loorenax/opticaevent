@@ -1,0 +1,36 @@
+20221021 19:33:17 ValidarAcceso
+  --> msg: 
+  --> source: System.Data
+  --> stacktrace:    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.set_Item(String columnName, Object value)
+   at optica.Data.Seguridad.ValidarAcceso(String _Url) in C:\Trabajo\Proyectos H\opticaevent\Eventos\Data\Seguridad.cs:line 74
+20221021 19:36:52 ValidarAcceso
+  --> msg: 
+  --> source: System.Data
+  --> stacktrace:    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.set_Item(String columnName, Object value)
+   at optica.Data.Seguridad.ValidarAcceso(String _Url) in C:\Trabajo\Proyectos H\opticaevent\Eventos\Data\Seguridad.cs:line 74
+20221021 19:38:13 ValidarAcceso
+  --> msg: 
+  --> source: System.Data
+  --> stacktrace:    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.set_Item(String columnName, Object value)
+   at optica.Data.Seguridad.ValidarAcceso(String _Url) in C:\Trabajo\Proyectos H\opticaevent\Eventos\Data\Seguridad.cs:line 74
+20221021 19:39:11 ValidarAcceso
+  --> msg: 
+  --> source: System.Data
+  --> stacktrace:    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.set_Item(String columnName, Object value)
+   at optica.Data.Seguridad.ValidarAcceso(String _Url) in C:\Trabajo\Proyectos H\opticaevent\Eventos\Data\Seguridad.cs:line 74
+20221021 19:39:36 ValidarAcceso
+  --> msg: 
+  --> source: System.Data
+  --> stacktrace:    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.set_Item(String columnName, Object value)
+   at optica.Data.Seguridad.ValidarAcceso(String _Url) in C:\Trabajo\Proyectos H\opticaevent\Eventos\Data\Seguridad.cs:line 74
+20221021 19:42:08 ValidarAcceso
+  --> msg: 
+  --> source: System.Data
+  --> stacktrace:    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.set_Item(String columnName, Object value)
+   at optica.Data.Seguridad.ValidarAcceso(String _Url) in C:\Trabajo\Proyectos H\opticaevent\Eventos\Data\Seguridad.cs:line 74

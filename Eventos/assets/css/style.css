@@ -703,6 +703,9 @@ a.dt-button.active:not(.disabled) {
 .btn-flat {
   border-radius: 0;
 }
+.btn .fa {
+    margin-right: 3px;
+}
 .dropdown-menu li {
   padding: 0 10px;
   font-size: 14px;
@@ -735,6 +738,21 @@ a.dt-button.active:not(.disabled) {
 .sidebar-hide .logo span {
   display: none;
 }
+
+.sidebar .nano-content > ul li > a {
+    color: #eef5f9;
+}
+.sidebar .nano-content > ul > li.active > a, .sidebar .nano-content > ul > li.open > a, .sidebar .nano-content > ul > li > ul {
+    background: #fff;
+    color: var(--mk-color-principal);
+}
+
+
+.sidebar .nano-content > ul li > a:hover {
+    background: #fff;
+    color: var(--mk-color-principal);
+}
+
 .header-icon {
   font-size: 18px;
   padding: 12px 15px;

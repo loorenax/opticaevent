@@ -445,8 +445,8 @@ namespace optica
         public static DataTable SchemaDtResult_V2()
         {
             DataTable dtSchema = new DataTable();
-            dtSchema.Columns.Add("estatusProcedimiento");
-            dtSchema.Columns.Add("mensajeProcedimiento");
+            dtSchema.Columns.Add("Estatus_Procedimiento");
+            dtSchema.Columns.Add("Mensaje_Procedimiento");
 
             DataRow dr = dtSchema.NewRow();
             dtSchema.Rows.Add(dr);

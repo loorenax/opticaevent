@@ -66,6 +66,7 @@ namespace optica.Services
             {
                 JavaScriptSerializer deserializar_json = new JavaScriptSerializer();
                 Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
+
                 DataSet ds = dat.GetList(obj_parametros);
 
                 ms.Str_Respuesta_1 = JsonConvert.SerializeObject(ds);
@@ -100,6 +101,7 @@ namespace optica.Services
 
                 ds.Tables["Alumnos"].Columns.Remove("idRegistro");
                 ds.Tables["Alumnos"].Columns.Remove("idColegio");
+                ds.Tables["Alumnos"].Columns.Remove("activo");
                 ds.Tables["Alumnos"].Columns.Remove("fechaNacPadre");
                 ds.Tables["Alumnos"].Columns["str_fechaNacPadre"].ColumnName = "FechaNacPadre";
 
@@ -122,10 +124,9 @@ namespace optica.Services
             return Json_Resultado;
         }
 
-
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public string SetRegistro(string Parametros)
+        public string setRegistro(string Parametros)
         {
             string Json_Resultado = string.Empty;
             MensajeServidor ms = new MensajeServidor();
@@ -134,7 +135,7 @@ namespace optica.Services
             {
                 JavaScriptSerializer deserializar_json = new JavaScriptSerializer();
                 Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
-                DataSet ds = dat.SetRegistro(obj_parametros);
+                DataSet ds = dat.setRegistro(obj_parametros);
 
                 ms.Str_Respuesta_1 = JsonConvert.SerializeObject(ds);
                 ms.Estatus = Utils._OK_;
@@ -152,6 +153,69 @@ namespace optica.Services
 
             return Json_Resultado;
         }
+
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string setOjos(string Parametros)
+        {
+            string Json_Resultado = string.Empty;
+            MensajeServidor ms = new MensajeServidor();
+
+            try
+            {
+                JavaScriptSerializer deserializar_json = new JavaScriptSerializer();
+                Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
+                DataSet ds = dat.setOjos(obj_parametros);
+
+                ms.Str_Respuesta_1 = JsonConvert.SerializeObject(ds);
+                ms.Estatus = Utils._OK_;
+            }
+            catch (Exception Ex)
+            {
+                ms.Estatus = Utils._ERROR_;
+                ms.Mensaje = Ex.Message;
+                Utils.problems(Ex);
+            }
+            finally
+            {
+                Json_Resultado = JsonMapper.ToJson(ms);
+            }
+
+            return Json_Resultado;
+        }
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetRegistroByID(string Parametros)
+        {
+            string Json_Resultado = string.Empty;
+            MensajeServidor ms = new MensajeServidor();
+
+            try
+            {
+                JavaScriptSerializer deserializar_json = new JavaScriptSerializer();
+                Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
+                DataSet ds = dat.GetRegistroByID(obj_parametros);
+
+                ms.Str_Respuesta_1 = JsonConvert.SerializeObject(ds);
+                ms.Estatus = Utils._OK_;
+            }
+            catch (Exception Ex)
+            {
+                ms.Estatus = Utils._ERROR_;
+                ms.Mensaje = Ex.Message;
+                Utils.problems(Ex);
+            }
+            finally
+            {
+                Json_Resultado = JsonMapper.ToJson(ms);
+            }
+
+            return Json_Resultado;
+        }
+
+
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -183,6 +247,65 @@ namespace optica.Services
             return Json_Resultado;
         }
 
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string SetEje(string Parametros)
+        {
+            string Json_Resultado = string.Empty;
+            MensajeServidor ms = new MensajeServidor();
+
+            try
+            {
+                JavaScriptSerializer deserializar_json = new JavaScriptSerializer();
+                Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
+                DataSet ds = dat.SetEje(obj_parametros);
+
+                ms.Str_Respuesta_1 = JsonConvert.SerializeObject(ds);
+                ms.Estatus = Utils._OK_;
+            }
+            catch (Exception Ex)
+            {
+                ms.Estatus = Utils._ERROR_;
+                ms.Mensaje = Ex.Message;
+                Utils.problems(Ex);
+            }
+            finally
+            {
+                Json_Resultado = JsonMapper.ToJson(ms);
+            }
+
+            return Json_Resultado;
+        }
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string SetInactivarReactivar(string Parametros)
+        {
+            string Json_Resultado = string.Empty;
+            MensajeServidor ms = new MensajeServidor();
+
+            try
+            {
+                JavaScriptSerializer deserializar_json = new JavaScriptSerializer();
+                Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
+                DataSet ds = dat.SetInactivarReactivar(obj_parametros);
+
+                ms.Str_Respuesta_1 = JsonConvert.SerializeObject(ds);
+                ms.Estatus = Utils._OK_;
+            }
+            catch (Exception Ex)
+            {
+                ms.Estatus = Utils._ERROR_;
+                ms.Mensaje = Ex.Message;
+                Utils.problems(Ex);
+            }
+            finally
+            {
+                Json_Resultado = JsonMapper.ToJson(ms);
+            }
+
+            return Json_Resultado;
+        }
 
     }
 }

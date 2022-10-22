@@ -1,12 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/paginas/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Alumnos.aspx.cs" Inherits="optica.paginas.Alumnos" %>
-<%@ Import Namespace="optica.Data" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/paginas/SiteMaster.Master" AutoEventWireup="true" CodeBehind="LentesEntregados.aspx.cs" Inherits="optica.paginas.LentesEntregados" %>
 
+<%@ Import Namespace="optica.Data" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="../js/pages/Alumnos.js?<% = Sezzion.codigoSession %>"></script>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="contenedorPrincipal" class="container-fluid mk-height-full">
+<div id="contenedorPrincipal" class="container-fluid mk-height-full">
         <div hidden>
             <a id="Btn_Descargar_Reporte_Excel_Generado" href="#" target="_blank"></a>
         </div>
