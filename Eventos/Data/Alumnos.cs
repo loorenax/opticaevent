@@ -22,7 +22,7 @@ namespace optica.Data
         public DataSet GetInit(Dictionary<string, object> _DyParametros)
         {
             DataSet ds = new DataSet();
-            string spname = "optica_getColegio";
+            string spname = "optica_GetInit";
             Dictionary<string, object> dyparametros = cnxn.SetFormatDyDatos(_DyParametros, spname);
             SqlParameter[] sqlparameters = cnxn.getSQLParameters(dyparametros);
 
@@ -30,7 +30,7 @@ namespace optica.Data
 
             ds.Tables[0].TableName = "ColegiosFiltro";
             ds.Tables[1].TableName = "Colegios";
-
+            ds.Tables[2].TableName = "Padecimientos";
 
             return ds;
         }
@@ -137,8 +137,37 @@ namespace optica.Data
 
             return ds;
         }
+        public DataSet SetPadecimiento(Dictionary<string, object> _DyParametros)
+        {
+            DataSet ds = new DataSet();
+            string spname = "optica_setPadecimiento";
+            Dictionary<string, object> dyparametros = cnxn.SetFormatDyDatos(_DyParametros, spname);
+            SqlParameter[] sqlparameters = cnxn.getSQLParameters(dyparametros);
+
+            ds = SqlHelper.ExecuteDataset(Cnxn.sCon, spname, sqlparameters);
+
+            ds.Tables[0].TableName = "Result";
+
+            return ds;
+        }
 
 
+
+
+        
+        public DataSet SetLentesEntregadosByColegio(Dictionary<string, object> _DyParametros)
+        {
+            DataSet ds = new DataSet();
+            string spname = "optica_setLentesEntregadosByColegio";
+            Dictionary<string, object> dyparametros = cnxn.SetFormatDyDatos(_DyParametros, spname);
+            SqlParameter[] sqlparameters = cnxn.getSQLParameters(dyparametros);
+
+            ds = SqlHelper.ExecuteDataset(Cnxn.sCon, spname, sqlparameters);
+
+            ds.Tables[0].TableName = "Result";
+
+            return ds;
+        }
 
         public DataSet SetInactivarReactivar(Dictionary<string, object> _DyParametros)
         {

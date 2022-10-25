@@ -103,7 +103,8 @@ function fg_mensaje_pregunta_nuevo_registro(_mensaje_aviso, _nombre_funcion_ejec
         html: true,
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Si, un nuevo registro.",
+        confirmButtonText: "Si, nuevo registro.",
+        cancelButtonText: "No, ir al listado.",
         closeOnConfirm: true
     }, function (result) {
 
@@ -2286,6 +2287,30 @@ function fg_GetPagina() {
 
     return resultado;
 }
+
+
+function fg_redimensionarGridPrincipal() {
+
+    var viewportHeight = $(window).height();
+
+    var alto_viewport_base = 979;
+    var alto_grid_base = 750;
+    var ajuste_base = 5.25;
+
+
+    var alto = (viewportHeight * alto_grid_base) / alto_viewport_base;
+
+    var ajuste = (alto_viewport_base - viewportHeight) / ajuste_base;
+
+    var alto_final = alto - ajuste;
+
+
+
+
+    return alto_final;
+}
+
+
 
 /*******************  Especial **********************************/
 

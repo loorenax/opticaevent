@@ -22,6 +22,8 @@ var DtMes = [{ idMes: '01', mes: 'Enero' }
 ];
 
 var TipoProceso = '';
+var DtPadecimientos;
+var DtAlumnos;
 
 function setTemplateCaptura() {
 
@@ -119,6 +121,10 @@ function setTemplateCaptura() {
 
                                     <div class="col-sm-6 col-md-3 col-lg-2 text-center">
                                         ${fg_Template_BtnChk_Form_Group('lentesEntregados', false, 'Lente Entregado', ' onclick="BtnChk_lentesEntregados_Click();"')}
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
+                                        ${fg_Template_Select_Form_Group('idPadecimiento', false, 'Padecimiento', '')}
                                     </div>
 
                                 </div>
@@ -229,6 +235,8 @@ function getInit() {
 
                     fg_cargar_combo_from_List(PAGECONTROLS.controls.Cmb_idColegio_Filtro, 'idColegio', 'NOMBRECT', ds.ColegiosFiltro, false);
                     fg_cargar_combo_from_List(PAGECONTROLS.controls.Cmb_idColegio, 'idColegio', 'NOMBRECT', ds.Colegios, false);
+                    fg_cargar_combo_from_List(PAGECONTROLS.controls.Cmb_idPadecimiento, 'idPadecimiento', 'padecimiento', ds.Padecimientos, true);
+                    DtPadecimientos = ds.Padecimientos;
 
                     getList();
 
@@ -436,7 +444,7 @@ function loadGrid(_Dt) {
 
         if (TipoProceso == 'Alumnos') {
             columnas.push({
-                field: 'idRegistro', title: 'Opciones', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+                field: 'idRegistro', title: 'Opciones', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', footerFormatter: "fg_RowCounter"
                 , formatter: function (value, row, key) {
 
                     var tag = fg_get_template_BtnEdit('btnEditar', 'btnEditarClick', row.idRegistro);
@@ -484,6 +492,19 @@ function loadGrid(_Dt) {
                 , formatter: function (value, row, key) {
 
                     var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`lentesEntregados_${row.idRegistro}`, row.Lente_Entregado, `onclick="setLentesEntregados(${row.idRegistro})"`);
+
+                    return tag;
+                }
+            });
+            columnas.push({
+                field: 'idPadecimiento', title: 'Padecimiento', visible: true, sortable: true, width: '250', clickToSelect: false, align: 'center'
+                , formatter: function (value, row, key) {
+
+                    var valor = '';
+                    if (row.idPadecimiento != null) {
+                        valor = row.idPadecimiento;
+                    }
+                    var tag = `<select class="form-control" id="Cmb_idPadecimiento_${row.idRegistro}" value="${valor}" onchange="setPadecimiento(${row.idRegistro})"></select>`;
 
                     return tag;
                 }
@@ -543,12 +564,12 @@ function loadGrid(_Dt) {
         columnas.push(fg_Col_Grid_fechaCreoRegistro());
         columnas.push(fg_Col_Grid_Activo());
         */
-
+        var alto = fg_redimensionarGridPrincipal();
         $(Control_Grid_Activo).bootstrapTable({
-            /*height: 650,*/
+            height: alto,
             cache: false,
             striped: true,
-            pagination: true,
+            pagination: false,
             smartDysplay: true,
             search: true,
             advancedSearch: true,
@@ -580,7 +601,6 @@ function loadGrid(_Dt) {
         });
 
         //Crearmos el grid con las columnas
-
         if (_Dt !== null) {
             $(Control_Grid_Activo).bootstrapTable('load', _Dt);
         }
@@ -597,6 +617,21 @@ function loadGrid(_Dt) {
 
             var Btn_Nuevo_Catalogo = document.getElementById('Btn_Nuevo_Catalogo');
             Btn_Nuevo_Catalogo.addEventListener("click", btnNuevoClick);
+
+            _Dt.forEach(x => {
+                var cmb = document.getElementById(`Cmb_idPadecimiento_${x.idRegistro}`);
+                if (cmb != null) {
+                    fg_cargar_combo_from_List(cmb, 'idPadecimiento', 'padecimiento', DtPadecimientos, true);
+
+                    if (x.idPadecimiento != null) {
+                        cmb.value = x.idPadecimiento;
+                    }
+                    else {
+                        cmb.value = '';
+                    }
+                    
+                }
+            });
         }
 
     }
@@ -837,7 +872,71 @@ function setEje(_idRegistro) {
         fg_mensaje_problema_tecnico(e);
     }
 }
+function setPadecimiento(_idRegistro) {
 
+
+    try {
+
+        var cmb = document.getElementById(`Cmb_idPadecimiento_${_idRegistro}`);
+        cmb.disabled = true;
+
+        var obj_filtros = Object();
+        obj_filtros.idRegistro = _idRegistro
+        obj_filtros.idPadecimiento = cmb.value;
+
+        var ruta = '../Services/WSAlumnos.asmx/SetPadecimiento';
+        var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });
+
+        //var btn = document.getElementById(`BtnChk_lentesEntregados_${_idRegistro}`);
+        var btn = null;
+        var icono_inicial = fg_Cambiar_Icono_DOM(btn, _SPINNER_);
+
+        $.ajax({
+            type: 'POST',
+            url: ruta,
+            data: $data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            cache: false,
+            success: function (datos) {
+                cmb.disabled = false;
+                //fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                var mensaje_servidor = JSON.parse(datos.d);
+
+                if (mensaje_servidor.Estatus == _OK_) {
+
+                    fechaActual = mensaje_servidor.Str_Fecha_Actual;
+
+                    var ds = JSON.parse(mensaje_servidor.Str_Respuesta_1);
+
+                    if (fg_resultOK(ds.Result)) {
+                        fg_alert_aviso_exitoso('Registro', 'El registro se guardo exitosamente');
+                    }
+                    else {
+                        //fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    }
+                }
+                else {
+
+                    //fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    fg_mensaje_problema_tecnico(mensaje_servidor);
+                }
+
+            }
+            , error: function (error) {
+                cmb.disabled = false;
+                //fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                fg_mensaje_problema_tecnico(error);
+            }
+
+        });
+
+    }
+    catch (e) {
+        fg_mensaje_problema_tecnico(e);
+    }
+}
 
 function Cmb_idColegio_Filtro_Change() {
 
@@ -1153,6 +1252,83 @@ function BtnChk_lentesEntregados_Click() {
     }
 
 }
+
+
+function setLentesEntregadosByColegio() {
+
+
+    try {
+
+        var obj_filtros = Object();
+        obj_filtros.idColegio = PAGECONTROLS.controls.Cmb_idColegio_Filtro.value;
+
+        var ruta = '../Services/WSAlumnos.asmx/SetLentesEntregadosByColegio';
+        var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });
+
+        var btn = document.getElementById(`BtnEntregarLentesMasivo`);
+        var icono_inicial = fg_Cambiar_Icono_DOM(btn, _SPINNER_);
+
+        $.ajax({
+            type: 'POST',
+            url: ruta,
+            data: $data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            cache: false,
+            success: function (datos) {
+
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                var mensaje_servidor = JSON.parse(datos.d);
+
+                if (mensaje_servidor.Estatus == _OK_) {
+
+                    fechaActual = mensaje_servidor.Str_Fecha_Actual;
+
+                    var ds = JSON.parse(mensaje_servidor.Str_Respuesta_1);
+
+                    if (fg_resultOK(ds.Result)) {
+                        fg_alert_aviso_exitoso('Lentes Entregados', `Se actualizarón ${ds.Result[0].registrosActualizados}`);
+                        getList();
+                    }
+                    else {
+                        fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    }
+                }
+                else {
+
+                    fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    fg_mensaje_problema_tecnico(mensaje_servidor);
+                }
+
+            }
+            , error: function (error) {
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                fg_mensaje_problema_tecnico(error);
+            }
+
+        });
+
+    }
+    catch (e) {
+        fg_mensaje_problema_tecnico(e);
+    }
+}
+function BtnEntregarLentesMasivoClick() {
+
+    try {
+        var colegio = PAGECONTROLS.controls.Cmb_idColegio_Filtro.options[PAGECONTROLS.controls.Cmb_idColegio_Filtro.selectedIndex].text;
+        var msg = `Usted está indicando marcar la entrega de lentes de todos los alumnos del colegio: ${colegio}`;
+        fg_mensaje_pregunta(msg, 'setLentesEntregadosByColegio', null);
+    }
+    catch (e) {
+        fg_mensaje_problema_tecnico(e);
+    }
+
+}
+
+
+
 
 /* ===== ===== ===== Estos se vinculan en DOMContentLoaded ===== ===== =====  */
 function btnGuardarClick() {

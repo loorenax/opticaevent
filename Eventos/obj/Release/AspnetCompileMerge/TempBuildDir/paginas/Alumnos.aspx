@@ -23,10 +23,11 @@
                         <select class="form-control" id="Cmb_idColegio_Filtro" onchange="Cmb_idColegio_Filtro_Change();" ></select>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3 col-lg-3 d-flex align-items-end">
+                <div class="col-sm-12 col-md-5 col-lg-4 d-flex align-items-end">
                     <button id="BtnExportar" type="button" class="btn btn-primary" onclick="BtnExportarClick();">Exportar Colegio Seleccionado</button>
+                    <button id="BtnEntregarLentesMasivo" type="button" class="btn btn-danger ml-2" onclick="BtnEntregarLentesMasivoClick();">Marcar Entrega de Lentes</button>
                 </div>
-                <div class="col-sm-12 col-md-3 col-lg-4 d-flex align-items-end justify-content-end">
+                <div class="col-sm-12 col-md-2 col-lg-3 d-flex align-items-end justify-content-end">
                     <button id="BtnExportarTodo" type="button" class="btn btn-primary" onclick="BtnExportarClickTodo();">Exportar Total de Registros</button>
                 </div>
 
