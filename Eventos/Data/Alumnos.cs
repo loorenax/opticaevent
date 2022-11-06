@@ -29,8 +29,8 @@ namespace optica.Data
             ds = SqlHelper.ExecuteDataset(Cnxn.sCon, spname, sqlparameters);
 
             ds.Tables[0].TableName = "ColegiosFiltro";
-            ds.Tables[1].TableName = "Colegios";
-            ds.Tables[2].TableName = "Padecimientos";
+            ds.Tables[1].TableName = "ColegiosFiltroLentesEntregados";
+            ds.Tables[2].TableName = "Colegios";
 
             return ds;
         }
@@ -137,6 +137,19 @@ namespace optica.Data
 
             return ds;
         }
+        public DataSet SetCostoLentes(Dictionary<string, object> _DyParametros)
+        {
+            DataSet ds = new DataSet();
+            string spname = "optica_setCostoLentes";
+            Dictionary<string, object> dyparametros = cnxn.SetFormatDyDatos(_DyParametros, spname);
+            SqlParameter[] sqlparameters = cnxn.getSQLParameters(dyparametros);
+
+            ds = SqlHelper.ExecuteDataset(Cnxn.sCon, spname, sqlparameters);
+
+            ds.Tables[0].TableName = "Result";
+
+            return ds;
+        }
         public DataSet SetPadecimiento(Dictionary<string, object> _DyParametros)
         {
             DataSet ds = new DataSet();
@@ -152,9 +165,6 @@ namespace optica.Data
         }
 
 
-
-
-        
         public DataSet SetLentesEntregadosByColegio(Dictionary<string, object> _DyParametros)
         {
             DataSet ds = new DataSet();
@@ -186,5 +196,21 @@ namespace optica.Data
 
             return ds;
         }
+
+
+        public DataSet SetCheckBit(Dictionary<string, object> _DyParametros)
+        {
+            DataSet ds = new DataSet();
+            string spname = "optica_setCheckBit";
+            Dictionary<string, object> dyparametros = cnxn.SetFormatDyDatos(_DyParametros, spname);
+            SqlParameter[] sqlparameters = cnxn.getSQLParameters(dyparametros);
+
+            ds = SqlHelper.ExecuteDataset(Cnxn.sCon, spname, sqlparameters);
+
+            ds.Tables[0].TableName = "Result";
+
+            return ds;
+        }
+
     }
 }

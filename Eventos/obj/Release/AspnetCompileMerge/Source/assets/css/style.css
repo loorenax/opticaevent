@@ -2862,6 +2862,9 @@ td .btn {
 td button .fa {
     font-size:14px;
 }
+td .btnchk .fa {
+    font-size: 18px;
+}
 
 .table .round-img img {
   width: 38px;
@@ -4469,6 +4472,10 @@ h6.h1 {
 .contacto-email small {
     display: inline-block;
     color: #0094ff;
+}
+
+tabla tbody td {
+    white-space: nowrap;
 }
 .mk-td-block{
     width:100%;

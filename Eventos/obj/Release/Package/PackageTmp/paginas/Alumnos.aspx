@@ -24,6 +24,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-5 col-lg-4 d-flex align-items-end">
+                    <button id="BtnRecargar" type="button" class="btn btn-primary mr-2" onclick="BtnRecargarClick();"><i class="fa fa-refresh"></i></button>
                     <button id="BtnExportar" type="button" class="btn btn-primary" onclick="BtnExportarClick();">Exportar Colegio Seleccionado</button>
                     <button id="BtnEntregarLentesMasivo" type="button" class="btn btn-danger ml-2" onclick="BtnEntregarLentesMasivoClick();">Marcar Entrega de Lentes</button>
                 </div>
@@ -35,7 +36,8 @@
 
 
             <div class="card-body">
-                <table id="Grid_Listado" data-toolbar="#toolbar" data-search="true" data-advanced-search="true" data-id-table="advancedTable"  class="table table-striped table-sm"></table>
+                <%--<table id="Grid_Listado" data-toolbar="#toolbar" data-search="true" data-advanced-search="true" data-id-table="advancedTable"  class="table table-striped table-sm"></table>--%>
+                <table id="Grid_Listado" data-toolbar="#toolbarListado" data-search="true" class="table table-borderless table-hover"></table>
             </div>
         </div>
 

@@ -2004,12 +2004,12 @@ function fg_Template_Fecha_Nacimiento() {
                     </div>
                     <div class="mk-fn-elementos">
                         <div class="mk-fn-elementos-labels">
-                            <label>*Día</label><label>*Mes</label><label>*Año</label>
+                            <label>Día</label><label>Mes</label><label>Año</label>
                         </div>
                         <div class="mk-fn-elementos-inputs">
-                            <input type="number" class="form-control dia" id="Txt_Fecha_Nacimiento_Dia" onkeyup="fg_validaDia();" min="1"  max="31" step="1" required>
-                            <select class="form-control mes" id="Cmb_Fecha_Nacimiento_Mes" required></select>
-                            <input type="number" class="form-control anio" id="Txt_Fecha_Nacimiento_Anio" onkeyup="fg_validaAnio();" min="1900" step="1" required>
+                            <input type="number" class="form-control dia" id="Txt_Fecha_Nacimiento_Dia" onkeyup="fg_validaDia();" min="1"  max="31" step="1">
+                            <select class="form-control mes" id="Cmb_Fecha_Nacimiento_Mes"></select>
+                            <input type="number" class="form-control anio" id="Txt_Fecha_Nacimiento_Anio" onkeyup="fg_validaAnio();" min="1900" step="1" >
                         </div>
                     </div>
 

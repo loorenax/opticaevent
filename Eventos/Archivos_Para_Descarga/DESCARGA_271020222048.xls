@@ -1,0 +1,517 @@
+﻿<?xml version='1.0'?>
+<?mso-application progid='Excel.Sheet'?>
+<s:Workbook xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:s="urn:schemas-microsoft-com:office:spreadsheet">
+  <o:DocumentProperties>
+    <o:Title>Reporte Excel</o:Title>
+    <o:Author>Reporte</o:Author>
+    <o:Created>2022-10-27T20:48:55</o:Created>
+  </o:DocumentProperties>
+  <s:Styles>
+    <s:Style s:ID="HeaderStyle">
+      <s:Alignment s:Horizontal="Center" />
+      <s:Borders>
+        <s:Border s:Color="Black" s:Position="Top" s:LineStyle="Continuous" s:Weight="1" />
+        <s:Border s:Color="Black" s:Position="Bottom" s:LineStyle="Continuous" s:Weight="1" />
+        <s:Border s:Color="Black" s:Position="Left" s:LineStyle="Continuous" s:Weight="1" />
+        <s:Border s:Color="Black" s:Position="Right" s:LineStyle="Continuous" s:Weight="1" />
+      </s:Borders>
+      <s:Font s:Bold="1" s:FontName="Tahoma" s:Size="10" s:Color="#FFFFFF" />
+      <s:Interior s:Color="#193d61" s:Pattern="Solid" />
+    </s:Style>
+    <s:Style s:ID="BodyStyle">
+      <s:Alignment s:Horizontal="Left" />
+      <s:Borders>
+        <s:Border s:Color="Black" s:Position="Top" s:LineStyle="Continuous" s:Weight="1" />
+        <s:Border s:Color="Black" s:Position="Bottom" s:LineStyle="Continuous" s:Weight="1" />
+        <s:Border s:Color="Black" s:Position="Left" s:LineStyle="Continuous" s:Weight="1" />
+        <s:Border s:Color="Black" s:Position="Right" s:LineStyle="Continuous" s:Weight="1" />
+      </s:Borders>
+      <s:Font s:FontName="Tahoma" s:Size="9" s:Color="#000000" />
+      <s:Interior s:Color="#FFFFFF" s:Pattern="Solid" />
+    </s:Style>
+    <s:Style s:ID="dateStyle">
+      <s:Alignment s:Horizontal="Left" />
+      <s:Borders>
+        <s:Border s:Color="Black" s:Position="Top" s:LineStyle="Continuous" s:Weight="1" />
+        <s:Border s:Color="Black" s:Position="Bottom" s:LineStyle="Continuous" s:Weight="1" />
+        <s:Border s:Color="Black" s:Position="Left" s:LineStyle="Continuous" s:Weight="1" />
+        <s:Border s:Color="Black" s:Position="Right" s:LineStyle="Continuous" s:Weight="1" />
+      </s:Borders>
+      <s:Font s:FontName="Tahoma" s:Size="9" s:Color="#000000" />
+      <s:Interior s:Color="#FFFFFF" s:Pattern="Solid" />
+      <s:NumberFormat s:Format="dd/mm/yyyy" />
+    </s:Style>
+  </s:Styles>
+  <s:Worksheet s:Name="Reporte SSA">
+    <s:Table>
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Column s:Width="120" />
+      <s:Row>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">folioRegistro</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">folioBeneficiario</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">oi</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">od</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">eje</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">Lente Entregado</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">costoLentes</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">sinDetalle</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">miopia</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">astigmatismo</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">hipermetropia</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">casoEspecial</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">Escuela</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">Grado</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">Grupo</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">nombreAlumno</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">nombreCompletoPadre</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">FechaNacPadre</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">telefonoContacto</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">autorizaPrueba</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">fechaCreoRegistro</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">usuarioCreo</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">fechaUltimoCambio</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="HeaderStyle">
+          <s:Data s:Type="String">usuarioModifico</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">000022</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">000504</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">5</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">5</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">5</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">True</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">True</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">CLUB DE LEONES NUM. 19 ROMULO GARZA</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">True</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 2:34:19 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">henry</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 2:34:19 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">henry</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">P002853</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">1200</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">CLUB DE LEONES NUM. 19 ROMULO GARZA</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">Diego</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">True</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 6:30:05 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">doctor.optica</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 6:47:16 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">doctor.optica</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">P002854</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">1500</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">CLUB DE LEONES NUM. 19 ROMULO GARZA</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">Maria Canelita</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">True</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 6:45:46 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">doctor.optica</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 6:47:14 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">doctor.optica</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">P002743</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">001001</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">5</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">5</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">5</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">True</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">True</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">False</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">CLUB DE LEONES NUM. 19 ROMULO GARZA</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">DSFDS</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">DSFDS</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">PRUEBA JUAN</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">DDSF SDFD SDFDS</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">SDFDS</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">True</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 2:43:38 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">henry</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 2:43:38 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">henry</s:Data>
+        </s:Cell>
+      </s:Row>
+      <s:Row>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">P002742</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String" />
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">CLUB DE LEONES NUM. 19 ROMULO GARZA</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">dsfds</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">erew</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">sdfsd</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">sdfsd dsf dfds</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">04/Jan/2004</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">3</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">True</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 2:36:11 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">operador.publico</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">10/27/2022 2:36:11 PM</s:Data>
+        </s:Cell>
+        <s:Cell s:StyleID="BodyStyle">
+          <s:Data s:Type="String">operador.publico</s:Data>
+        </s:Cell>
+      </s:Row>
+    </s:Table>
+  </s:Worksheet>
+</s:Workbook>

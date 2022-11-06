@@ -24,6 +24,9 @@ var DtMes = [{ idMes: '01', mes: 'Enero' }
 var TipoProceso = '';
 var DtPadecimientos;
 var DtAlumnos;
+var DtColegiosFiltro;
+var DtColegios;
+var idUltimoColegioCapturado;
 
 function setTemplateCaptura() {
 
@@ -49,7 +52,7 @@ function setTemplateCaptura() {
 
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-6">
-                                        ${fg_Template_TextBox_Form_Group('nombreAlumno', '', 'Nombre completo del alumno', `required`)}
+                                        ${fg_Template_TextBox_Form_Group('nombreAlumno', '', 'Nombre completo del alumno', ``)}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -65,6 +68,20 @@ function setTemplateCaptura() {
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-2 col-lg-1">
+                                        <div class="form-group">
+                                            <label for="Txt_folioRegistro">Folio Registro</label>
+                                            <div class="d-flex justify-content-between">
+                                                <input type="text" class="form-control" id="Txt_str_registroPasado" value="" autocomplete="off" style="text-align:center;width:50px;" readonly>
+                                                <input type="number" class="form-control" id="Txt_folioRegistro" value="" autocomplete="off" style="text-align:center;width:auto;">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
 
@@ -75,14 +92,14 @@ function setTemplateCaptura() {
 
                                 <div class="row mt-4 mb-2 ">
                                     <div class="col-sm-4 col-md-4 col-lg-2">
-                                        ${fg_Template_TextBox_Form_Group('nombrePadre', '', 'Primer Nombre', `required`)}
+                                        ${fg_Template_TextBox_Form_Group('nombrePadre', '', 'Primer Nombre', ``)}
                                     </div>
                                     <div class="col-sm-4 col-md-4 col-lg-2">
                                         ${fg_Template_TextBox_Form_Group('segundoNombrePadre', '', 'Segundo Nombre (en caso de tener)', ``)}
                                     </div>
 
                                     <div class="col-sm-4 col-md-4 col-lg-2">
-                                        ${fg_Template_TextBox_Form_Group('apellidoPaternoPadre', '', 'Ap. Paterno', ` required`)}
+                                        ${fg_Template_TextBox_Form_Group('apellidoPaternoPadre', '', 'Ap. Paterno', ` `)}
                                     </div>
                                     <div class="col-sm-4 col-md-4 col-lg-2">
                                         ${fg_Template_TextBox_Form_Group('apellidoMaternoPadre', '', 'Ap. Materno', ``)}
@@ -93,7 +110,7 @@ function setTemplateCaptura() {
                                     </div>
 
                                     <div class="col-sm-4 col-md-4 col-lg-2">
-                                        ${fg_Template_TextBox_Form_Group('telefonoContacto', '', 'Teléfono de contacto', `required`)}
+                                        ${fg_Template_TextBox_Form_Group('telefonoContacto', '', 'Teléfono de contacto', ``)}
                                    </div>
                                     <div class="col-sm-12 col-md-12 col-lg-12 text-right">
 
@@ -123,11 +140,32 @@ function setTemplateCaptura() {
                                         ${fg_Template_BtnChk_Form_Group('lentesEntregados', false, 'Lente Entregado', ' onclick="BtnChk_lentesEntregados_Click();"')}
                                     </div>
 
+
                                     <div class="col-sm-6 col-md-3 col-lg-2 text-center">
-                                        ${fg_Template_Select_Form_Group('idPadecimiento', false, 'Padecimiento', '')}
+                                        ${fg_Template_TextBoxNum_Form_Group('folioBeneficiario', false, 'Folio de Beneficiario', '')}
                                     </div>
 
                                 </div>
+
+                                <div class="row mt-4 mb-2">
+                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
+                                        ${fg_Template_BtnChk_Form_Group('sinDetalle', false, 'Sin Detalle', ' onclick="BtnChk_Padecimiento_Click(this);"')}
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
+                                        ${fg_Template_BtnChk_Form_Group('miopia', false, 'Miopía', ' onclick="BtnChk_Padecimiento_Click(this);"')}
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
+                                        ${fg_Template_BtnChk_Form_Group('astigmatismo', false, 'Astigmatismo', ' onclick="BtnChk_Padecimiento_Click(this);"')}
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
+                                        ${fg_Template_BtnChk_Form_Group('hipermetropia', false, 'Hipermetropía', ' onclick="BtnChk_Padecimiento_Click(this);"')}
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
+                                        ${fg_Template_BtnChk_Form_Group('casoEspecial', false, 'Caso especial', ' onclick="BtnChk_Padecimiento_Click(this);"')}
+                                    </div>
+
+                                </div>
+
 
                             </div>
                         </div>
@@ -210,7 +248,7 @@ function getInit() {
 
 
         var obj_filtros = Object();
-        obj_filtros.P_lentesEntregados = (TipoProceso == 'Alumnos' ? false : true);
+       
 
         var ruta = '../Services/WSAlumnos.asmx/GetInit';
         var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });
@@ -233,10 +271,17 @@ function getInit() {
 
                     var ds = JSON.parse(mensaje_servidor.Str_Respuesta_1);
 
-                    fg_cargar_combo_from_List(PAGECONTROLS.controls.Cmb_idColegio_Filtro, 'idColegio', 'NOMBRECT', ds.ColegiosFiltro, false);
+                    if (TipoProceso == 'Alumnos') {
+                        DtColegiosFiltro = ds.ColegiosFiltro;
+                        fg_cargar_combo_from_List(PAGECONTROLS.controls.Cmb_idColegio_Filtro, 'idColegio', 'NOMBRECT', ds.ColegiosFiltro, false);
+                    }
+                    else {
+                        fg_cargar_combo_from_List(PAGECONTROLS.controls.Cmb_idColegio_Filtro, 'idColegio', 'NOMBRECT', ds.ColegiosFiltroLentesEntregados, false);
+                    }
+
+                    DtColegios = ds.Colegios;
                     fg_cargar_combo_from_List(PAGECONTROLS.controls.Cmb_idColegio, 'idColegio', 'NOMBRECT', ds.Colegios, false);
-                    fg_cargar_combo_from_List(PAGECONTROLS.controls.Cmb_idPadecimiento, 'idPadecimiento', 'padecimiento', ds.Padecimientos, true);
-                    DtPadecimientos = ds.Padecimientos;
+
 
                     getList();
 
@@ -312,6 +357,10 @@ function getList() {
     }
 }
 
+
+function BtnRecargarClick() {
+    getList();
+}
 function BtnExportarClick() {
 
 
@@ -444,7 +493,7 @@ function loadGrid(_Dt) {
 
         if (TipoProceso == 'Alumnos') {
             columnas.push({
-                field: 'idRegistro', title: 'Opciones', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', footerFormatter: "fg_RowCounter"
+                field: 'idRegistro', title: 'Opciones', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
                 , formatter: function (value, row, key) {
 
                     var tag = fg_get_template_BtnEdit('btnEditar', 'btnEditarClick', row.idRegistro);
@@ -452,35 +501,46 @@ function loadGrid(_Dt) {
                     return tag;
                 }
             });
+        }
+        columnas.push({
+            field: 'folioRegistro', title: 'Folio Registro', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'left', filterControl: 'input'
+        });
+
+        columnas.push({
+            field: 'folioBeneficiario', title: 'Folio Beneficiario', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'left', filterControl: 'input'
+        });
+
+
+        if (TipoProceso == 'Alumnos') {
 
             columnas.push({
-                field: 'od', title: 'OD', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+                field: 'od', title: 'OD', visible: true, sortable: true, width: '300', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
                 , formatter: function (value, row, key) {
 
                     var tag = `
-                           <input type="text" class="form-control" id="Txt_od_${row.idRegistro}" value="${row.od}" onchange="setOjos(${row.idRegistro});" maxlength="10" placeholder="OD" autocomplete="off" style="text-align:center;"/>
+                           <input type="text" class="form-control" id="Txt_od_${row.idRegistro}" value="${row.od}" onchange="setOjos(${row.idRegistro});" maxlength="10" placeholder="OD" autocomplete="off" style="text-align:center;width:120px;"/>
                           `;
 
                     return tag;
                 }
             });
             columnas.push({
-                field: 'oi', title: 'OI', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+                field: 'oi', title: 'OI', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
                 , formatter: function (value, row, key) {
 
                     var tag = `
-                           <input type="text" class="form-control" id="Txt_oi_${row.idRegistro}" value="${row.oi}" onchange="setOjos(${row.idRegistro});"  maxlength="10" placeholder="OI" autocomplete="off" style="text-align:center;"/>
+                           <input type="text" class="form-control" id="Txt_oi_${row.idRegistro}" value="${row.oi}" onchange="setOjos(${row.idRegistro});"  maxlength="10" placeholder="OI" autocomplete="off" style="text-align:center;width:120px;"/>
                           `;
 
                     return tag;
                 }
             });
             columnas.push({
-                field: 'eje', title: 'Eje', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+                field: 'eje', title: 'Eje', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
                 , formatter: function (value, row, key) {
 
                     var tag = `
-                           <input type="text" class="form-control" id="Txt_eje_${row.idRegistro}" value="${row.eje}" onchange="setEje(${row.idRegistro});"  maxlength="10" placeholder="Eje" autocomplete="off" style="text-align:center;"/>
+                           <input type="text" class="form-control" id="Txt_eje_${row.idRegistro}" value="${row.eje}" onchange="setEje(${row.idRegistro});"  maxlength="10" placeholder="Eje" autocomplete="off" style="text-align:center;width:120px;"/>
                           `;
 
                     return tag;
@@ -488,7 +548,7 @@ function loadGrid(_Dt) {
             });
 
             columnas.push({
-                field: 'lentesEntregados', title: 'Lente Entregado', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+                field: 'lentesEntregados', title: 'Lente Entregado', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
                 , formatter: function (value, row, key) {
 
                     var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`lentesEntregados_${row.idRegistro}`, row.Lente_Entregado, `onclick="setLentesEntregados(${row.idRegistro})"`);
@@ -496,15 +556,59 @@ function loadGrid(_Dt) {
                     return tag;
                 }
             });
+            //columnas.push({
+            //    field: 'costoLentes', title: 'Costo Lentes', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'center'
+            //    , formatter: function (value, row, key) {
+
+            //        var tag = `
+            //               <input type="number" class="form-control" id="Txt_costoLentes_${row.idRegistro}" value="${row.costoLentes}" onchange="setcostoLentes(${row.idRegistro});" maxlength="10" placeholder="Costo" autocomplete="off" style="text-align:center;width:120px;"/>
+            //              `;
+            //        return tag;
+            //    }
+            //});
+
+
+            // ------------ PADECIMIENTOS ---------------
             columnas.push({
-                field: 'idPadecimiento', title: 'Padecimiento', visible: true, sortable: true, width: '250', clickToSelect: false, align: 'center'
+                field: 'sinDetalle', title: 'Sin Detalle', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
                 , formatter: function (value, row, key) {
 
-                    var valor = '';
-                    if (row.idPadecimiento != null) {
-                        valor = row.idPadecimiento;
-                    }
-                    var tag = `<select class="form-control" id="Cmb_idPadecimiento_${row.idRegistro}" value="${valor}" onchange="setPadecimiento(${row.idRegistro})"></select>`;
+                    var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`sinDetalle_${row.idRegistro}`, row.sinDetalle, `onclick="setCheckBit('sinDetalle', ${row.idRegistro})"`);
+
+                    return tag;
+                }
+            });
+            columnas.push({
+                field: 'miopia', title: 'Miopía', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                , formatter: function (value, row, key) {
+
+                    var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`miopia_${row.idRegistro}`, row.miopia, `onclick="setCheckBit('miopia', ${row.idRegistro})"`);
+
+                    return tag;
+                }
+            });
+            columnas.push({
+                field: 'astigmatismo', title: 'Astigmatismo', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                , formatter: function (value, row, key) {
+
+                    var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`astigmatismo_${row.idRegistro}`, row.astigmatismo, `onclick="setCheckBit('astigmatismo', ${row.idRegistro})"`);
+
+                    return tag;
+                }
+            });
+            columnas.push({
+                field: 'hipermetropia', title: 'Hipermetropia', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', searchable: true, filterControl: 'input', searchFormatter:false
+                , formatter: function (value, row, key) {
+
+                    var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`hipermetropia_${row.idRegistro}`, row.hipermetropia, `onclick="setCheckBit('hipermetropia', ${row.idRegistro})"`);
+                    return tag;
+                }
+            });
+            columnas.push({
+                field: 'casoEspecial', title: 'Caso Especial', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                , formatter: function (value, row, key) {
+
+                    var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`casoEspecial_${row.idRegistro}`, row.casoEspecial, `onclick="setCheckBit('casoEspecial', ${row.idRegistro})"`);
 
                     return tag;
                 }
@@ -513,17 +617,17 @@ function loadGrid(_Dt) {
         }
         else {
             columnas.push({
-                field: 'od', title: 'OD', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+                field: 'od', title: 'OD', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input'
             });
             columnas.push({
-                field: 'oi', title: 'OI', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+                field: 'oi', title: 'OI', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input'
             });
             columnas.push({
-                field: 'eje', title: 'Eje', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+                field: 'eje', title: 'Eje', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input'
             });
 
             columnas.push({
-                field: 'lentesEntregados', title: 'Lente Entregado', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+                field: 'lentesEntregados', title: 'Lente Entregado', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
                 , formatter: function (value, row, key) {
 
                     return (row.lentesEntregados ? 'SI' : 'NO');
@@ -533,29 +637,57 @@ function loadGrid(_Dt) {
 
         }
 
+
         columnas.push({
-            field: 'nombreAlumno', title: 'Nombre del alumno', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'left'
+            field: 'nombreAlumno', title: 'Nombre del alumno', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'left', filterControl: 'input', searchFormatter: false
+            , formatter: function (value, row, key) {
+
+                var tag = `<div class="mk-td-block">${row.nombreAlumno}</div>`;
+                return tag;
+            }
         });
         columnas.push({
-            field: 'nombreCompletoPadre', title: 'Nombre del padre o tutor', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'left'
+            field: 'nombreCompletoPadre', title: 'Nombre del padre o tutor', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'left', filterControl: 'input'
         });
         columnas.push({
-            field: 'fechaNacPadre', title: 'Fecha de Nacimiento', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'right'
+            field: 'fechaNacPadre', title: 'Fecha de Nacimiento', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'right', filterControl: 'input', searchFormatter: false
             , formatter: function (value, row, key) {
 
                 return row.str_fechaNacPadre;
             }
         });
         columnas.push({
-            field: 'telefonoContacto', title: 'Teléfono', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'right'
+            field: 'telefonoContacto', title: 'Teléfono', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'right', filterControl: 'input'
         });
         columnas.push({
-            field: 'autorizaPrueba', title: 'Autorizó Prueba', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center'
+            field: 'autorizaPrueba', title: 'Autorizó Prueba', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', searchable: true, filterControl: 'input'
             , formatter: function (value, row, key) {
 
                 return (row.autorizaPrueba ? 'SI' : 'NO');
             }
 
+        });
+        columnas.push({
+            field: 'fechaCreoRegistro', title: 'Fecha Crea Registro', visible: true, sortable: true, width: '300', clickToSelect: false, align: 'right', filterControl: 'input'
+            , formatter: function (value, row, key) {
+
+                var tag = `<div class="mk-td-block">${row.str_Fecha_Registro}</div>`;
+                return tag;
+            }
+        });
+        columnas.push({
+            field: 'usuarioCreo', title: 'Usuario Creo', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'left', filterControl: 'input'
+        });
+        columnas.push({
+            field: 'fechaUltimoCambio', title: 'Fecha Ult. Modificación', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'right', filterControl: 'input'
+            , formatter: function (value, row, key) {
+
+                var tag = `<div class="mk-td-block">${row.str_FechaUltimoCambio}</div>`;
+                return tag;
+            }
+        });
+        columnas.push({
+            field: 'usuarioModifico', title: 'Usuario Modificó', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'left', filterControl: 'input'
         });
 
 
@@ -566,13 +698,13 @@ function loadGrid(_Dt) {
         */
         var alto = fg_redimensionarGridPrincipal();
         $(Control_Grid_Activo).bootstrapTable({
-            height: alto,
+            /*height: alto,*/
             cache: false,
             striped: true,
-            pagination: false,
+            pagination: true,
             smartDysplay: true,
-            search: true,
-            advancedSearch: true,
+            search: false,
+            /*advancedSearch: true,*/
             searchOnEnterKey: false, //El método será ejecutado hasta que la tecla Enter sea presionada.
             /*showColumns: true,*/
             showFooter: true,
@@ -618,20 +750,20 @@ function loadGrid(_Dt) {
             var Btn_Nuevo_Catalogo = document.getElementById('Btn_Nuevo_Catalogo');
             Btn_Nuevo_Catalogo.addEventListener("click", btnNuevoClick);
 
-            _Dt.forEach(x => {
-                var cmb = document.getElementById(`Cmb_idPadecimiento_${x.idRegistro}`);
-                if (cmb != null) {
-                    fg_cargar_combo_from_List(cmb, 'idPadecimiento', 'padecimiento', DtPadecimientos, true);
+            //_Dt.forEach(x => {
+            //    var cmb = document.getElementById(`Cmb_idPadecimiento_${x.idRegistro}`);
+            //    if (cmb != null) {
+            //        fg_cargar_combo_from_List(cmb, 'idPadecimiento', 'padecimiento', DtPadecimientos, true);
 
-                    if (x.idPadecimiento != null) {
-                        cmb.value = x.idPadecimiento;
-                    }
-                    else {
-                        cmb.value = '';
-                    }
+            //        if (x.idPadecimiento != null) {
+            //            cmb.value = x.idPadecimiento;
+            //        }
+            //        else {
+            //            cmb.value = '';
+            //        }
                     
-                }
-            });
+            //    }
+            //});
         }
 
     }
@@ -872,6 +1004,69 @@ function setEje(_idRegistro) {
         fg_mensaje_problema_tecnico(e);
     }
 }
+function setcostoLentes(_idRegistro) {
+
+
+    try {
+
+        var txt = document.getElementById(`Txt_costoLentes_${_idRegistro}`);
+
+        var obj_filtros = Object();
+        obj_filtros.idRegistro = _idRegistro
+        obj_filtros.costoLentes = txt.value;
+
+        var ruta = '../Services/WSAlumnos.asmx/SetCostoLentes';
+        var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });
+
+        //var btn = document.getElementById(`BtnChk_lentesEntregados_${_idRegistro}`);
+        var btn = null;
+        var icono_inicial = fg_Cambiar_Icono_DOM(btn, _SPINNER_);
+
+        $.ajax({
+            type: 'POST',
+            url: ruta,
+            data: $data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            cache: false,
+            success: function (datos) {
+
+                //fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                var mensaje_servidor = JSON.parse(datos.d);
+
+                if (mensaje_servidor.Estatus == _OK_) {
+
+                    fechaActual = mensaje_servidor.Str_Fecha_Actual;
+
+                    var ds = JSON.parse(mensaje_servidor.Str_Respuesta_1);
+
+                    if (fg_resultOK(ds.Result)) {
+                        fg_alert_aviso_exitoso('Registro', 'El registro se guardo exitosamente');
+                    }
+                    else {
+                        //fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    }
+                }
+                else {
+
+                    //fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    fg_mensaje_problema_tecnico(mensaje_servidor);
+                }
+
+            }
+            , error: function (error) {
+                //fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                fg_mensaje_problema_tecnico(error);
+            }
+
+        });
+
+    }
+    catch (e) {
+        fg_mensaje_problema_tecnico(e);
+    }
+}
 function setPadecimiento(_idRegistro) {
 
 
@@ -938,6 +1133,70 @@ function setPadecimiento(_idRegistro) {
     }
 }
 
+
+function setCheckBit(_Campo, _idRegistro) {
+
+
+    try {
+
+        var obj_filtros = Object();
+        obj_filtros.Campo = _Campo;
+        obj_filtros.idRegistro = _idRegistro;
+
+        var ruta = '../Services/WSAlumnos.asmx/SetCheckBit';
+        var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });
+
+        var btn = document.getElementById(`BtnChk_${_Campo}_${_idRegistro}`);
+        var icono_inicial = fg_Cambiar_Icono_DOM(btn, _SPINNER_);
+
+        $.ajax({
+            type: 'POST',
+            url: ruta,
+            data: $data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            cache: false,
+            success: function (datos) {
+
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                var mensaje_servidor = JSON.parse(datos.d);
+
+                if (mensaje_servidor.Estatus == _OK_) {
+
+                    fechaActual = mensaje_servidor.Str_Fecha_Actual;
+
+                    var ds = JSON.parse(mensaje_servidor.Str_Respuesta_1);
+
+                    if (fg_resultOK(ds.Result)) {
+
+                        fg_BtnChk_ChekClik(btn);
+                    }
+                    else {
+                        fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    }
+                }
+                else {
+
+                    fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                    fg_mensaje_problema_tecnico(mensaje_servidor);
+                }
+
+            }
+            , error: function (error) {
+                fg_Cambiar_Icono_DOM(btn, icono_inicial);
+                fg_mensaje_problema_tecnico(error);
+            }
+
+        });
+
+    }
+    catch (e) {
+        fg_mensaje_problema_tecnico(e);
+    }
+}
+
+
 function Cmb_idColegio_Filtro_Change() {
 
     try {
@@ -963,10 +1222,14 @@ function limpiarCaptura() {
         fg_ChekedUnchecked(PAGECONTROLS.controls.BtnChk_rezagado, false);
         fg_ChekedUnchecked(PAGECONTROLS.controls.BtnChk_lentesEntregados, false);
 
-
+        PAGECONTROLS.controls.Txt_str_registroPasado.hidden = true;
 
         fg_disable_controls_group(PAGECONTROLS.controls.Card_Captura_Body, false);
         PAGECONTROLS.controls.Btn_Guardar_Captura.disabled = false;
+
+        var idColegio = PAGECONTROLS.controls.Cmb_idColegio_Filtro.value;
+        $('#Cmb_idColegio').val(idColegio); // Select the option with a value of '1'
+        $('#Cmb_idColegio').trigger('change'); // Notify any JS components that the value changed
 
     }
     catch (e) {
@@ -982,9 +1245,6 @@ function btnNuevoClick() {
         
         fg_Abrir_Ventana(PAGECONTROLS.controls.Card_Captura);
         //PAGECONTROLS.controls.Cmb_idColegio.value = PAGECONTROLS.controls.Cmb_idColegio_Filtro.value;
-        var idColegio = PAGECONTROLS.controls.Cmb_idColegio_Filtro.value;
-        $('#Cmb_idColegio').val(idColegio); // Select the option with a value of '1'
-        $('#Cmb_idColegio').trigger('change'); // Notify any JS components that the value changed
     }
     catch (e) {
         fg_mensaje_problema_tecnico(e);
@@ -1046,6 +1306,7 @@ function getRegistroByID(_idRegistro) {
                     PAGECONTROLS.controls.Cmb_Fecha_Nacimiento_Mes.value = row.fechaNacPadre_MM
                     PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Anio.value = row.fechaNacPadre_yyyy
 
+                    PAGECONTROLS.controls.Txt_str_registroPasado.hidden = !(row.str_registroPasado == 'P');
 
                     $('#Cmb_idColegio').val(row.idColegio); // Select the option with a value of '1'
                     $('#Cmb_idColegio').trigger('change'); // Notify any JS components that the value changed
@@ -1090,12 +1351,26 @@ function setRegistro() {
             var obj_filtros = Object();
             obj_filtros = fg_Get_Object_Control_Valor(PAGECONTROLS.controls.Card_Captura_Body.id);
             obj_filtros.P_idRegistro = Registro_ID_Seleccionado;
-            obj_filtros.P_fechaNacPadre = PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Dia.value
-                + '-' + PAGECONTROLS.controls.Cmb_Fecha_Nacimiento_Mes.value
-                + '-' + PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Anio.value;
+            if (
+                !fg_isEmptyOrNull(PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Dia.value)
+                && !fg_isEmptyOrNull(PAGECONTROLS.controls.Cmb_Fecha_Nacimiento_Mes.value)
+                && !fg_isEmptyOrNull(PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Anio.value)
+            ) {
+                obj_filtros.P_fechaNacPadre = PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Dia.value
+                    + '-' + PAGECONTROLS.controls.Cmb_Fecha_Nacimiento_Mes.value
+                    + '-' + PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Anio.value;
+
+            }
+
 
             obj_filtros.rezagado = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_rezagado) == 'SI';
             obj_filtros.lentesEntregados = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_lentesEntregados) == 'SI';
+
+            obj_filtros.sinDetalle = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_sinDetalle) == 'SI';
+            obj_filtros.miopia = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_miopia) == 'SI';
+            obj_filtros.astigmatismo = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_astigmatismo) == 'SI';
+            obj_filtros.hipermetropia = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_hipermetropia) == 'SI';
+            obj_filtros.casoEspecial = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_casoEspecial) == 'SI';
 
 
             var Btn_Guardar_Captura = document.getElementById('Btn_Guardar_Captura');
@@ -1127,7 +1402,22 @@ function setRegistro() {
 
                             Registro_ID_Seleccionado = ds.Result[0].idGenerado;
                             fg_alert_aviso_exitoso('El registro se guardo exitosamente');
+
+                            idUltimoColegioCapturado = obj_filtros.idColegio;
+
+                            var buscaColegio = DtColegiosFiltro.filter(x => x.idColegio == idUltimoColegioCapturado);
+                            if (buscaColegio.length == 0) {
+
+                                var colegioSeleccionado = DtColegios.filter(x => x.idColegio == idUltimoColegioCapturado);
+
+                                DtColegiosFiltro.push(colegioSeleccionado[0]);
+                            }
+
+
                             fg_mensaje_pregunta_nuevo_registro(`El registro se guardo existosamente. <br> ¿Desea capturar otra alumno?`, 'limpiarCaptura', 'btnCerrarClick');
+
+
+
 
 
                         }
@@ -1241,7 +1531,6 @@ function BtnChk_rezagado_Click() {
     }
 
 }
-
 function BtnChk_lentesEntregados_Click() {
 
     try {
@@ -1252,7 +1541,16 @@ function BtnChk_lentesEntregados_Click() {
     }
 
 }
+function BtnChk_Padecimiento_Click(_Btn) {
 
+    try {
+        fg_BtnChk_ChekClik(_Btn);
+    }
+    catch (e) {
+        fg_mensaje_problema_tecnico(e);
+    }
+
+}
 
 function setLentesEntregadosByColegio() {
 
@@ -1344,8 +1642,18 @@ function btnGuardarClick() {
 function btnCerrarClick() {
 
     try {
+
+        if (idUltimoColegioCapturado != null) {
+            fg_cargar_combo_from_List(PAGECONTROLS.controls.Cmb_idColegio_Filtro, 'idColegio', 'NOMBRECT', DtColegiosFiltro, false);
+            $('#Cmb_idColegio_Filtro').val(idUltimoColegioCapturado); // Select the option with a value of '1'
+            $('#Cmb_idColegio_Filtro').trigger('change'); // Notify any JS components that the value changed
+            getList();
+        }
+
+        idUltimoColegioCapturado = null;
+
         fg_Cerrar_Ventana_Abierta();
-        getList();
+
 
     }
     catch (e) {

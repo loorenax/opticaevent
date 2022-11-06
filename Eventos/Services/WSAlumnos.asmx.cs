@@ -99,11 +99,25 @@ namespace optica.Services
                 Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
                 DataSet ds = dat.GetList(obj_parametros);
 
-                ds.Tables["Alumnos"].Columns.Remove("idRegistro");
-                ds.Tables["Alumnos"].Columns.Remove("idColegio");
-                ds.Tables["Alumnos"].Columns.Remove("idPadecimiento");
-                ds.Tables["Alumnos"].Columns.Remove("activo");
-                ds.Tables["Alumnos"].Columns.Remove("fechaNacPadre");
+                if(ds.Tables["Alumnos"].Columns.Contains("idRegistro"))
+                    ds.Tables["Alumnos"].Columns.Remove("idRegistro");
+                if (ds.Tables["Alumnos"].Columns.Contains("idColegio"))
+                    ds.Tables["Alumnos"].Columns.Remove("idColegio");
+                if (ds.Tables["Alumnos"].Columns.Contains("idPadecimiento"))
+                    ds.Tables["Alumnos"].Columns.Remove("idPadecimiento");
+                if (ds.Tables["Alumnos"].Columns.Contains("activo"))
+                    ds.Tables["Alumnos"].Columns.Remove("activo");
+                if (ds.Tables["Alumnos"].Columns.Contains("fechaNacPadre"))
+                    ds.Tables["Alumnos"].Columns.Remove("fechaNacPadre");
+
+                if (ds.Tables["Alumnos"].Columns.Contains("str_Fecha_Registro"))
+                    ds.Tables["Alumnos"].Columns.Remove("str_Fecha_Registro");
+                if (ds.Tables["Alumnos"].Columns.Contains("str_FechaUltimoCambio"))
+                    ds.Tables["Alumnos"].Columns.Remove("str_FechaUltimoCambio");
+                if (ds.Tables["Alumnos"].Columns.Contains("costoLentes"))
+                    ds.Tables["Alumnos"].Columns.Remove("costoLentes");
+
+
                 ds.Tables["Alumnos"].Columns["str_fechaNacPadre"].ColumnName = "FechaNacPadre";
 
                 string nombreReporte =  Utils.Crear_Excel_V2(ds.Tables["Alumnos"], "Alumnos");
@@ -280,6 +294,36 @@ namespace optica.Services
 
         [WebMethod(EnableSession = true)]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string SetCostoLentes(string Parametros)
+        {
+            string Json_Resultado = string.Empty;
+            MensajeServidor ms = new MensajeServidor();
+
+            try
+            {
+                JavaScriptSerializer deserializar_json = new JavaScriptSerializer();
+                Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
+                DataSet ds = dat.SetCostoLentes(obj_parametros);
+
+                ms.Str_Respuesta_1 = JsonConvert.SerializeObject(ds);
+                ms.Estatus = Utils._OK_;
+            }
+            catch (Exception Ex)
+            {
+                ms.Estatus = Utils._ERROR_;
+                ms.Mensaje = Ex.Message;
+                Utils.problems(Ex);
+            }
+            finally
+            {
+                Json_Resultado = JsonMapper.ToJson(ms);
+            }
+
+            return Json_Resultado;
+        }
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string SetPadecimiento(string Parametros)
         {
             string Json_Resultado = string.Empty;
@@ -369,6 +413,38 @@ namespace optica.Services
 
             return Json_Resultado;
         }
+
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string SetCheckBit(string Parametros)
+        {
+            string Json_Resultado = string.Empty;
+            MensajeServidor ms = new MensajeServidor();
+
+            try
+            {
+                JavaScriptSerializer deserializar_json = new JavaScriptSerializer();
+                Dictionary<string, object> obj_parametros = deserializar_json.Deserialize<Dictionary<string, object>>(Parametros);
+                DataSet ds = dat.SetCheckBit(obj_parametros);
+
+                ms.Str_Respuesta_1 = JsonConvert.SerializeObject(ds);
+                ms.Estatus = Utils._OK_;
+            }
+            catch (Exception Ex)
+            {
+                ms.Estatus = Utils._ERROR_;
+                ms.Mensaje = Ex.Message;
+                Utils.problems(Ex);
+            }
+            finally
+            {
+                Json_Resultado = JsonMapper.ToJson(ms);
+            }
+
+            return Json_Resultado;
+        }
+
 
     }
 }
