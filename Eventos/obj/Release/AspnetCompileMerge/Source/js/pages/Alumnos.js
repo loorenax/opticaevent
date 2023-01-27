@@ -125,29 +125,65 @@ function setTemplateCaptura() {
                             <div class="card-title mk-card-title">Evaluación</div>
                             <div class="card-body pl-4">
 
+
                                 <div class="row mt-4 mb-2">
-                                    <div class="col-sm-4 col-md-2 col-lg-1">
-                                        ${fg_Template_TextBox_Form_Group('od', '', 'OD', ` maxlength="10" `)}
-                                    </div>
-                                    <div class="col-sm-4 col-md-2 col-lg-1">
-                                        ${fg_Template_TextBox_Form_Group('oi', '', 'OI', ` maxlength="10" `)}
-                                    </div>
-                                    <div class="col-sm-4 col-md-2 col-lg-1">
-                                        ${fg_Template_TextBox_Form_Group('eje', '', 'Eje', ` maxlength="10" `)}
+                                    <div class="col-sm-12 col-md-6 col-lg-6 p-5">
+
+                                        <div class="card mk-card-grupo">
+                                            <div class="card-title ">Ojo Derecho</div>
+                                            <div class="card-body pl-4">
+
+                                                <div class="row mb-2">
+                                                    <div class="col-sm-4 col-md-2 col-lg-1">
+                                                        ${fg_Template_TextBox_Form_Group('od', '', 'OD', ` maxlength="10" `)}
+                                                    </div>
+
+                                                    <div class="col-sm-6 col-md-5 col-lg-5">
+                                                        ${fg_Template_TextBox_Form_Group('odESF', '', 'ESF', ` maxlength="100" `)}
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-5 col-lg-5">
+                                                        ${fg_Template_TextBox_Form_Group('odCIL', '', 'CIL', ` maxlength="100" `)}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
                                     </div>
 
-                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
-                                        ${fg_Template_BtnChk_Form_Group('lentesEntregados', false, 'Lente Entregado', ' onclick="BtnChk_lentesEntregados_Click();"')}
-                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6 p-5">
+
+                                        <div class="card mk-card-grupo">
+                                            <div class="card-title">Ojo Izquierdo</div>
+                                            <div class="card-body pl-4">
+
+                                                <div class="row mb-2">
+                                                    <div class="col-sm-4 col-md-2 col-lg-1">
+                                                        ${fg_Template_TextBox_Form_Group('oi', '', 'OI', ` maxlength="10" `)}
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-5 col-lg-5">
+                                                        ${fg_Template_TextBox_Form_Group('oiESF', '', 'ESF', ` maxlength="100" `)}
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-5 col-lg-5">
+                                                        ${fg_Template_TextBox_Form_Group('oiCIL', '', 'CIL', ` maxlength="100" `)}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
 
 
-                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
-                                        ${fg_Template_TextBoxNum_Form_Group('folioBeneficiario', false, 'Folio de Beneficiario', '')}
                                     </div>
 
                                 </div>
 
+
                                 <div class="row mt-4 mb-2">
+                                    <div class="col-sm-4 col-md-2 col-lg-1">
+                                        ${fg_Template_TextBox_Form_Group('eje', '', 'Eje', ` maxlength="10" `)}
+                                    </div>
+
                                     <div class="col-sm-6 col-md-3 col-lg-2 text-center">
                                         ${fg_Template_BtnChk_Form_Group('sinDetalle', false, 'Sin Detalle', ' onclick="BtnChk_Padecimiento_Click(this);"')}
                                     </div>
@@ -165,6 +201,18 @@ function setTemplateCaptura() {
                                     </div>
 
                                 </div>
+
+
+                                <div class="row mt-4 mb-2">
+                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
+                                        ${fg_Template_BtnChk_Form_Group('lentesEntregados', false, 'Lente Entregado', ' onclick="BtnChk_lentesEntregados_Click();"')}
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
+                                        ${fg_Template_TextBoxNum_Form_Group('folioBeneficiario', false, 'Folio de Beneficiario', '')}
+                                    </div>
+                                </div>
+
 
 
                             </div>
@@ -301,7 +349,7 @@ function getInit() {
         fg_mensaje_problema_tecnico(e);
     }
 }
-function getList() {
+function getList(_Btn) {
 
 
     try {
@@ -320,6 +368,10 @@ function getList() {
         $(Control_Grid_Activo).bootstrapTable('destroy');
 
 
+        var btnactivo = _Btn;
+        var iconoInicial = fg_Cambiar_Icono_DOM(btnactivo, _SPINNER_);
+
+
         $.ajax({
             type: 'POST',
             url: ruta,
@@ -329,6 +381,8 @@ function getList() {
             async: true,
             cache: false,
             success: function (datos) {
+
+                fg_Cambiar_Icono_DOM(btnactivo, iconoInicial);
 
                 var mensaje_servidor = JSON.parse(datos.d);
 
@@ -347,6 +401,8 @@ function getList() {
 
             }
             , error: function (error) {
+
+                fg_Cambiar_Icono_DOM(btnactivo, iconoInicial);
                 fg_mensaje_problema_tecnico(error);
             }
         });
@@ -359,7 +415,7 @@ function getList() {
 
 
 function BtnRecargarClick() {
-    getList();
+    getList(PAGECONTROLS.controls.BtnRecargar);
 }
 function BtnExportarClick() {
 
@@ -524,6 +580,33 @@ function loadGrid(_Dt) {
                     return tag;
                 }
             });
+
+            columnas.push({
+                field: 'odESF', title: 'ESF', visible: true, sortable: true, width: '300', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                , formatter: function (value, row, key) {
+
+                    var tag = `
+                           <input type="text" class="form-control" id="Txt_odESF_${row.idRegistro}" value="${row.odESF}" onchange="setOjos(${row.idRegistro});" maxlength="100" placeholder="OD ESF" autocomplete="off" style="text-align:center;width:120px;"/>
+                          `;
+
+                    return tag;
+                }
+            });
+
+            columnas.push({
+                field: 'odCIL', title: 'CIL', visible: true, sortable: true, width: '300', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                , formatter: function (value, row, key) {
+
+                    var tag = `
+                           <input type="text" class="form-control" id="Txt_odCIL_${row.idRegistro}" value="${row.odCIL}" onchange="setOjos(${row.idRegistro});" maxlength="100" placeholder="OD CIL" autocomplete="off" style="text-align:center;width:120px;"/>
+                          `;
+
+                    return tag;
+                }
+            });
+
+
+
             columnas.push({
                 field: 'oi', title: 'OI', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
                 , formatter: function (value, row, key) {
@@ -535,6 +618,37 @@ function loadGrid(_Dt) {
                     return tag;
                 }
             });
+
+            columnas.push({
+                field: 'oiESF', title: 'ESF', visible: true, sortable: true, width: '300', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                , formatter: function (value, row, key) {
+
+                    var tag = `
+                           <input type="text" class="form-control" id="Txt_oiESF_${row.idRegistro}" value="${row.oiESF}" onchange="setOjos(${row.idRegistro});" maxlength="100" placeholder="OD ESF" autocomplete="off" style="text-align:center;width:120px;"/>
+                          `;
+
+                    return tag;
+                }
+            });
+
+            columnas.push({
+                field: 'oiCIL', title: 'CIL', visible: true, sortable: true, width: '300', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                , formatter: function (value, row, key) {
+
+                    var tag = `
+                           <input type="text" class="form-control" id="Txt_oiCIL_${row.idRegistro}" value="${row.oiCIL}" onchange="setOjos(${row.idRegistro});" maxlength="100" placeholder="OD CIL" autocomplete="off" style="text-align:center;width:120px;"/>
+                          `;
+
+                    return tag;
+                }
+            });
+
+
+
+
+
+
+
             columnas.push({
                 field: 'eje', title: 'Eje', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
                 , formatter: function (value, row, key) {
@@ -780,13 +894,28 @@ function setOjos(_idRegistro) {
     try {
 
         var txt_oi = document.getElementById(`Txt_oi_${_idRegistro}`);
+        var txt_oiESF = document.getElementById(`Txt_oiESF_${_idRegistro}`);
+        var txt_oiCIL = document.getElementById(`Txt_oiCIL_${_idRegistro}`);
+
+
         var txt_od = document.getElementById(`Txt_od_${_idRegistro}`);
+        var txt_odESF = document.getElementById(`Txt_odESF_${_idRegistro}`);
+        var txt_odCIL = document.getElementById(`Txt_odCIL_${_idRegistro}`);
+
 
 
         var obj_filtros = Object();
-        obj_filtros.idRegistro = _idRegistro
+        obj_filtros.idRegistro = _idRegistro;
+
         obj_filtros.P_oi = txt_oi.value;
+        obj_filtros.P_oiESF = txt_oiESF.value;
+        obj_filtros.P_oiCIL = txt_oiCIL.value
+
+
         obj_filtros.P_od = txt_od.value;
+        obj_filtros.P_odESF = txt_odESF.value;
+        obj_filtros.P_odCIL = txt_odCIL.value
+
 
         var ruta = '../Services/WSAlumnos.asmx/setOjos';
         var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });

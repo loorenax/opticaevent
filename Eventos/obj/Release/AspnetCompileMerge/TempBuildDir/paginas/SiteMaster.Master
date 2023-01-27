@@ -141,6 +141,22 @@
             border-top: 1px solid #ebebeb;
             border-bottom: 1px solid #ebebeb;
         }
+
+        .mk-card-grupo {
+            padding: 10px;
+            box-shadow: none;
+            border: 0px;
+            border: 1px solid #aeafb1;
+            padding-bottom: 10px;
+        }
+
+            .mk-card-grupo .card-title {
+            
+                text-align:center;
+                font-size: 14px;
+
+            }
+
         .row{
             margin:0px;
             padding:px;
