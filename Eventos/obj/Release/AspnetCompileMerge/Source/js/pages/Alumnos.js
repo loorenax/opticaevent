@@ -134,16 +134,20 @@ function setTemplateCaptura() {
                                             <div class="card-body pl-4">
 
                                                 <div class="row mb-2">
-                                                    <div class="col-sm-4 col-md-2 col-lg-1">
+                                                    <div class="col-sm-6 col-md-3 col-lg-3">
                                                         ${fg_Template_TextBox_Form_Group('od', '', 'OD', ` maxlength="10" `)}
                                                     </div>
 
-                                                    <div class="col-sm-6 col-md-5 col-lg-5">
+                                                    <div class="col-sm-6 col-md-3 col-lg-3">
                                                         ${fg_Template_TextBox_Form_Group('odESF', '', 'ESF', ` maxlength="100" `)}
                                                     </div>
-                                                    <div class="col-sm-6 col-md-5 col-lg-5">
+                                                    <div class="col-sm-6 col-md-3 col-lg-3">
                                                         ${fg_Template_TextBox_Form_Group('odCIL', '', 'CIL', ` maxlength="100" `)}
                                                     </div>
+                                                    <div class="col-sm-6 col-md-3 col-lg-3">
+                                                        ${fg_Template_TextBox_Form_Group('ejeOD', '', 'Eje', ` maxlength="10" `)}
+                                                    </div>
+
                                                 </div>
 
                                             </div>
@@ -159,15 +163,20 @@ function setTemplateCaptura() {
                                             <div class="card-body pl-4">
 
                                                 <div class="row mb-2">
-                                                    <div class="col-sm-4 col-md-2 col-lg-1">
+                                                    <div class="col-sm-6 col-md-3 col-lg-3">
                                                         ${fg_Template_TextBox_Form_Group('oi', '', 'OI', ` maxlength="10" `)}
                                                     </div>
-                                                    <div class="col-sm-6 col-md-5 col-lg-5">
+                                                    <div class="col-sm-6 col-md-3 col-lg-3">
                                                         ${fg_Template_TextBox_Form_Group('oiESF', '', 'ESF', ` maxlength="100" `)}
                                                     </div>
-                                                    <div class="col-sm-6 col-md-5 col-lg-5">
+                                                    <div class="col-sm-6 col-md-3 col-lg-3">
                                                         ${fg_Template_TextBox_Form_Group('oiCIL', '', 'CIL', ` maxlength="100" `)}
                                                     </div>
+                                                    <div class="col-sm-6 col-md-3 col-lg-3">
+                                                        ${fg_Template_TextBox_Form_Group('ejeOI', '', 'Eje', ` maxlength="10" `)}
+                                                    </div>
+
+
                                                 </div>
 
                                             </div>
@@ -180,9 +189,6 @@ function setTemplateCaptura() {
 
 
                                 <div class="row mt-4 mb-2">
-                                    <div class="col-sm-4 col-md-2 col-lg-1">
-                                        ${fg_Template_TextBox_Form_Group('eje', '', 'Eje', ` maxlength="10" `)}
-                                    </div>
 
                                     <div class="col-sm-6 col-md-3 col-lg-2 text-center">
                                         ${fg_Template_BtnChk_Form_Group('sinDetalle', false, 'Sin Detalle', ' onclick="BtnChk_Padecimiento_Click(this);"')}
@@ -199,6 +205,10 @@ function setTemplateCaptura() {
                                     <div class="col-sm-6 col-md-3 col-lg-2 text-center">
                                         ${fg_Template_BtnChk_Form_Group('casoEspecial', false, 'Caso especial', ' onclick="BtnChk_Padecimiento_Click(this);"')}
                                     </div>
+                                    <div class="col-sm-6 col-md-3 col-lg-2 text-center">
+                                        ${fg_Template_BtnChk_Form_Group('Maestro', false, 'Maestro', ' onclick="BtnChk_Padecimiento_Click(this);"')}
+                                    </div>
+
 
                                 </div>
 
@@ -650,16 +660,33 @@ function loadGrid(_Dt) {
 
 
             columnas.push({
-                field: 'eje', title: 'Eje', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                field: 'ejeOD', title: 'Eje OD', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
                 , formatter: function (value, row, key) {
 
                     var tag = `
-                           <input type="text" class="form-control" id="Txt_eje_${row.idRegistro}" value="${row.eje}" onchange="setEje(${row.idRegistro});"  maxlength="10" placeholder="Eje" autocomplete="off" style="text-align:center;width:120px;"/>
+                           <input type="text" class="form-control" id="Txt_ejeOD_${row.idRegistro}" value="${row.ejeOD}" onchange="setEje(${row.idRegistro}, 'OD');"  maxlength="10" placeholder="Eje" autocomplete="off" style="text-align:center;width:120px;"/>
                           `;
 
                     return tag;
                 }
             });
+
+            columnas.push({
+                field: 'ejeOI', title: 'Eje OI', visible: true, sortable: true, width: '200', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                , formatter: function (value, row, key) {
+
+                    var tag = `
+                           <input type="text" class="form-control" id="Txt_ejeOI_${row.idRegistro}" value="${row.ejeOI}" onchange="setEje(${row.idRegistro}, 'OI');"  maxlength="10" placeholder="Eje" autocomplete="off" style="text-align:center;width:120px;"/>
+                          `;
+
+                    return tag;
+                }
+            });
+
+
+
+
+
 
             columnas.push({
                 field: 'lentesEntregados', title: 'Lente Entregado', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
@@ -723,6 +750,15 @@ function loadGrid(_Dt) {
                 , formatter: function (value, row, key) {
 
                     var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`casoEspecial_${row.idRegistro}`, row.casoEspecial, `onclick="setCheckBit('casoEspecial', ${row.idRegistro})"`);
+
+                    return tag;
+                }
+            });
+            columnas.push({
+                field: 'Maestro', title: 'Maestro', visible: true, sortable: true, width: '100', clickToSelect: false, align: 'center', filterControl: 'input', searchFormatter: false
+                , formatter: function (value, row, key) {
+
+                    var tag = fg_Template_BtnChk_Form_Sin_Etiqueta(`Maestro_${row.idRegistro}`, row.Maestro, `onclick="setCheckBit('Maestro', ${row.idRegistro})"`);
 
                     return tag;
                 }
@@ -1070,16 +1106,17 @@ function setLentesEntregados(_idRegistro) {
         fg_mensaje_problema_tecnico(e);
     }
 }
-function setEje(_idRegistro) {
+function setEje(_idRegistro, _Campo) {
 
 
     try {
 
-        var txt = document.getElementById(`Txt_eje_${_idRegistro}`);
+        var txt = document.getElementById(`Txt_eje${_Campo}_${_idRegistro}`);
 
         var obj_filtros = Object();
         obj_filtros.idRegistro = _idRegistro
         obj_filtros.eje = txt.value;
+        obj_filtros.Campo = _Campo;
 
         var ruta = '../Services/WSAlumnos.asmx/SetEje';
         var $data = JSON.stringify({ 'Parametros': JSON.stringify(obj_filtros) });
@@ -1500,6 +1537,7 @@ function setRegistro() {
             obj_filtros.astigmatismo = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_astigmatismo) == 'SI';
             obj_filtros.hipermetropia = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_hipermetropia) == 'SI';
             obj_filtros.casoEspecial = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_casoEspecial) == 'SI';
+            obj_filtros.Maestro = fg_BtnChk_Get_Value(PAGECONTROLS.controls.BtnChk_Maestro) == 'SI';
 
 
             var Btn_Guardar_Captura = document.getElementById('Btn_Guardar_Captura');
