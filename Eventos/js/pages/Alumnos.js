@@ -1522,7 +1522,7 @@ function setRegistro() {
                 && !fg_isEmptyOrNull(PAGECONTROLS.controls.Cmb_Fecha_Nacimiento_Mes.value)
                 && !fg_isEmptyOrNull(PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Anio.value)
             ) {
-                obj_filtros.P_fechaNacPadre = PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Dia.value
+                obj_filtros.FechaNacimiento = PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Dia.value
                     + '-' + PAGECONTROLS.controls.Cmb_Fecha_Nacimiento_Mes.value
                     + '-' + PAGECONTROLS.controls.Txt_Fecha_Nacimiento_Anio.value;
 
